@@ -3,49 +3,45 @@ package basic.entity;
 import java.util.ArrayList;
 
 public class EntityManager {
-	private static EntityManager instance;
-	private ArrayList<Entity> entityList;
-	
-	public static EntityManager Instance() {
-		if(instance == null) {
-			instance = new EntityManager();
-		}
-		return instance;
-	}
+	private ArrayList<Entity> list;
 	
 	public EntityManager() {
-		entityList = new ArrayList<Entity>();
+		list = new ArrayList<Entity>();
 	}
 	
-	public void addEntity(Entity e){
-		entityList.add(e);
+	public Entity createEntity(String name) {
+		Entity entity = new Entity(name);
+		list.add(entity);
+		return entity;
 	}
 	
-	public void removeEntity(Entity e) {
-		entityList.remove(e);
-	}
-	
-	public void clearAll() {
-		entityList.clear();
-	}
-	
-	public Entity searchEntityByName(String name) {
-		Entity e;
-		for(int i = 0; i < entityList.size(); i++) {
-			e = entityList.get(i);
-			if(e.getName() == name) {
-				return e;
+	public void destoryEntity(Entity e) {
+		for(int i = 0; i < list.size(); i++) {
+			Entity temp = list.get(i);
+			if(temp == e) {
+				list.remove(i);
 			}
 		}
-		return null;
 	}
 	
-	public Entity searchEntityByID(int id) {
-		Entity e;
-		for(int i = 0; i < entityList.size(); i++) {
-			e = entityList.get(i);
-			if(e.getID() == id) {
-				return e;
+	public void destoryEntityByName(String name) {
+		for(int i = 0; i < list.size(); i++) {
+			Entity temp = list.get(i);
+			if(temp.getName() == name) {
+				list.remove(temp);
+			}
+		}
+	}
+	
+	public int getIndexByEntity(Entity entity) {
+		return list.indexOf(entity);
+	}
+	
+	public Entity getEntityByName(String name) {
+		for(int i = 0; i < list.size(); i++) {
+			Entity temp = list.get(i);
+			if(temp.getName() == name) {
+				return temp;
 			}
 		}
 		return null;

@@ -1,10 +1,22 @@
+import basic.world.World;
 
-public class main {
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		World.Instance().init();
-		World.Instance().render();
-		World.Instance().update();
+/**
+ * 
+ */
+
+/**
+ * @author chenningrui
+ *
+ */
+public class Main{
+	
+	public static void main(String[] arg) throws Exception {
+		World world = new World();
+		
+		world.addSystem();
+		world.initComponentMnager();
+		world.init();
+		world.gameLayer();
+		world.run();
 	}
-
 }

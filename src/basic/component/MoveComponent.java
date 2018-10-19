@@ -1,5 +1,6 @@
 package basic.component;
 import basic.component.Component;
+import basic.component.manager.ComponentType;
 
 public class MoveComponent  extends Component {
 	
@@ -17,6 +18,13 @@ public class MoveComponent  extends Component {
 	private int velocity;
 	private int acceleration;
 	private ORIENTATION direction;
+	
+	public MoveComponent(int acceleration, int velocity, ORIENTATION direction) {
+		type = ComponentType.move;
+		this.acceleration = acceleration;
+		this.velocity = velocity;
+		
+	}
 	
 	public int getVelocity() {
 		return this.velocity;

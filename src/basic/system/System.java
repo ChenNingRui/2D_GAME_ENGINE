@@ -1,32 +1,9 @@
 package basic.system;
 
-public class System {
-	protected static System instance;
+public interface System {
+	public void instantiation();
 	
-	public System() {
-		init();
-	}
-
-	protected void init() {
-	}
+	public void render();
 	
-	public void update() {}
-	
-	public void render() {}
-
+	public void update();
 }
-
-
-//UseEvent use = new UseEvent();
-//use.addMyEventListener(new MyEventListener(){
-//
-//	@Override
-//	public void HandleMyName(MyEvent ea) {
-//		// TODO Auto-generated method stub
-//		System.out.println("This is a listener" + ea.getName());
-//	}
-//	
-//});
-//
-//use.generateEvent();
-

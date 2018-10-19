@@ -1,39 +1,62 @@
 package basic.component.manager;
 
-import java.util.Hashtable;
 import basic.entity.*;
+
+import java.util.ArrayList;
+
 import basic.component.Component;
 
 public class ComponentManager {
-	private Hashtable<Entity, Component> componentDic;
-	private ComponentType type;
+	private ArrayList<ECObject> objList;
+	protected int type;
 	
 	public ComponentManager() {
-		componentDic = new Hashtable<Entity, Component>();
+		objList = new ArrayList<ECObject>();
 	}
 	
-	public void setComponentType(ComponentType type) {
-		this.type = type;
+	public ArrayList<ECObject> getComponentList() {
+		return objList;
 	}
 	
-	public ComponentType getComponentType() {
-		return type;
+	public void addComponent(Entity entity, Component component) {
+		ECObject obj = new ECObject(entity, component);
+		objList.add(obj);
 	}
 	
-	public void addComponent(Entity e, Component c) {
-		componentDic.put(e, c);
-	}
-	
-	public void removeComponent(Entity e) {
-		componentDic.remove(e);
+	public void removeComponentByEntity(Entity entity) {
+		for(int i = 0; i < objList.size(); i++) {
+			ECObject obj = objList.get(i);
+			if(obj.getEntity() == entity) {
+				objList.remove(i);
+			}
+		}
 	}
 	
 	public void clearAll() {
-		componentDic.clear();
+		objList.removeAll(objList);
 	}
 	
-	public Component searchComponentByKey(Entity e) {
-		Component c = componentDic.get(e);
-		return c;
+	public Entity getEntityByComponent(Component component) {
+		for(int i = 0; i < objList.size(); i++) {
+			ECObject obj = objList.get(i);
+			if(obj.getComponent() == component) {
+				return obj.getEntity();
+			}
+		}
+		return null;
+	}
+	
+	public Component getComponentByEntity(Entity entity) {
+		for(int i = 0; i < objList.size(); i++) {
+			ECObject obj = objList.get(i);
+			if(obj.getEntity() == entity) {
+				return obj.getComponent();
+			}
+		}
+		return null;
+	}
+
+	public int getType() {
+		return type;
 	}
 }

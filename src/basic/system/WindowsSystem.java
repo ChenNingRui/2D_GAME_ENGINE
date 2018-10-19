@@ -1,7 +1,6 @@
 package basic.system;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
@@ -49,7 +48,7 @@ public class WindowsSystem extends JFrame implements System{
 		
 		//Create a BufferedImage that will represent our view.
 		view = new BufferedImage(component.getBoundWidth(), component.getBoundWidth(), BufferedImage.TYPE_INT_RGB);
-		view.setRGB(0, 0, 0x000000);
+		//view.setRGB(0, 0, 0x000000);
 		//Create an array for pixels
 		pixels = ((DataBufferInt) view.getRaster().getDataBuffer()).getData();
 		camera = new Rectangle(0, 0, component.getBoundWidth(), component.getBoundWidth());
@@ -63,17 +62,24 @@ public class WindowsSystem extends JFrame implements System{
 
 	public void render() {
 		// TODO Auto-generated method stub
-		for(int i = 0; i < renderList.size(); i++) {
-			TextureComponent texture = renderList.get(i);
-			paintImg(texture.getImage(), texture.getLocationX(), texture.getLocationY(),
-					texture.getWidth(), texture.getHeight(), 
-					texture.getZoomX(), texture.getZoomY());
-		}
-//		TextureComponent texture = renderList.get(0);
-//		paintImg(texture.getImage(), texture.getLocationX(), texture.getLocationY(),
-//				texture.getWidth(), texture.getHeight(), 
-//				texture.getZoomX(), texture.getZoomY());
+		BufferStrategy bufferStragegy = canvas.getBufferStrategy();
+		Graphics graphics = bufferStragegy.getDrawGraphics();
+		super.paint(graphics);
 		
+		int i = 0;
+		while(renderList.size() > i) {
+			TextureComponent texture = renderList.get(i);
+			renderImage(texture.getImage(),
+					texture.getLocationX(), texture.getLocationY(), 
+					texture.getZoomX(), texture.getZoomY());
+			i++;
+		}
+		
+		graphics.drawImage(view, 0, 0, null);
+		graphics.dispose();
+		bufferStragegy.show();
+		
+		clear();
 	}
 	
 	public void update() {
@@ -104,21 +110,6 @@ public class WindowsSystem extends JFrame implements System{
 	
 	public void removeFromStage(TextureComponent textureComponent) {
 		renderList.remove(textureComponent);
-	}
-
-	public void paintImg(BufferedImage image, int x, int y, int width, int height, int zoomX, int zoomY) {
-		BufferStrategy bufferStragegy = canvas.getBufferStrategy();
-		Graphics graphics = bufferStragegy.getDrawGraphics();
-		super.paint(graphics);
-		graphics.setColor(Color.white);
-		
-		renderImage(image, x, y, zoomX, zoomY);
-		graphics.drawImage(view, 0, 0, null);
-		
-		graphics.dispose();
-		bufferStragegy.show();
-		
-		clear();
 	}
 	
 	private void clear()

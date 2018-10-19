@@ -42,19 +42,19 @@ public class TextureSystem implements System {
 			int y = playerTexture.getLocationY();
 			switch(playerMove.getDirection()){
 			case NORTH:
-				playerMove.setDirection(ORIENTATION.NORTH);
+				//playerMove.setDirection(ORIENTATION.NORTH);
 				playerTexture.setLocationX(y - playerMove.getVelocity());
 				break;
 			case SOUTH:
-				playerMove.setDirection(ORIENTATION.SOUTH);
+				//playerMove.setDirection(ORIENTATION.SOUTH);
 				playerTexture.setLocationX(y + playerMove.getVelocity());
 				break;
 			case WEST:
-				playerMove.setDirection(ORIENTATION.WEST);
+				//playerMove.setDirection(ORIENTATION.WEST);
 				playerTexture.setLocationX(x - playerMove.getVelocity());
 				break;
 			case EAST:
-				playerMove.setDirection(ORIENTATION.EAST);
+				//playerMove.setDirection(ORIENTATION.EAST);
 				playerTexture.setLocationX(x + playerMove.getVelocity());
 				break;
 			}

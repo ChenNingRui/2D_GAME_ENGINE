@@ -66,13 +66,11 @@ public class WindowsSystem extends JFrame implements System{
 		Graphics graphics = bufferStragegy.getDrawGraphics();
 		super.paint(graphics);
 		
-		int i = 0;
-		while(renderList.size() > i) {
+		for(int i = 0; i < renderList.size(); i++) {
 			TextureComponent texture = renderList.get(i);
 			renderImage(texture.getImage(),
 					texture.getLocationX(), texture.getLocationY(), 
 					texture.getZoomX(), texture.getZoomY());
-			i++;
 		}
 		
 		graphics.drawImage(view, 0, 0, null);

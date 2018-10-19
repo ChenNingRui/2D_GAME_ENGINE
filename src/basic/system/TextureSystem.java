@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import basic.component.InputComponent;
 import basic.component.MoveComponent;
 import basic.component.TextureComponent;
-import basic.component.MoveComponent.ORIENTATION;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.world.World;

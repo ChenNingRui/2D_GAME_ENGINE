@@ -64,7 +64,7 @@ public class WindowsSystem extends JFrame implements System{
 		// TODO Auto-generated method stub
 		BufferStrategy bufferStragegy = canvas.getBufferStrategy();
 		Graphics graphics = bufferStragegy.getDrawGraphics();
-		super.paint(graphics);
+		super.repaint();
 		
 		for(int i = 0; i < renderList.size(); i++) {
 			TextureComponent texture = renderList.get(i);

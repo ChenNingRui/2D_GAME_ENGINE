@@ -24,6 +24,7 @@ public class TextureSystem implements System {
 		playerTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player);
 		BufferedImage playerImage = world.getImageByTextureComponent(playerTexture);
 		playerTexture.setImage(playerImage);
+		world.AddToStage(playerTexture);
 	}
 
 	@Override
@@ -35,6 +36,11 @@ public class TextureSystem implements System {
 	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void render() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void update() {
 		// TODO Auto-generated method stub
 		if(playerInput.isPress()) {
 			int x = playerTexture.getLocationX();
@@ -54,14 +60,6 @@ public class TextureSystem implements System {
 				break;
 			}
 		}
-		world.AddToStage(playerTexture);
-		
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

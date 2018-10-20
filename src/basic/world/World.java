@@ -143,12 +143,12 @@ public class World{
 	
 	//drawn the entity on stage in each frame
 	private void render() {
-		texture.render();
 		windows.render();
 	}
 	
 	//updated the entity's data in each frames
 	private void update() {
+		texture.update();
 		move.update();
 	}
 

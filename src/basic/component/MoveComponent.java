@@ -23,7 +23,7 @@ public class MoveComponent  extends Component {
 		type = ComponentType.move;
 		this.acceleration = acceleration;
 		this.velocity = velocity;
-		
+		this.direction = direction;
 	}
 	
 	public int getVelocity() {

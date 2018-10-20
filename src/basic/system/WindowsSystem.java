@@ -127,10 +127,9 @@ public class WindowsSystem extends JFrame implements System{
 	{
 		for(int y = 0; y < renderHeight; y++)
 			for(int x = 0; x < renderWidth; x++)
-				setPixel(renderPixels[x + y * renderWidth], (x * xZoom) + xPosition, ((y * yZoom) + yPosition));
-//				for(int yZoomPosition = 0; yZoomPosition < yZoom; yZoomPosition++)
-//					for(int xZoomPosition = 0; xZoomPosition < xZoom; xZoomPosition++)
-//						setPixel(renderPixels[x + y * renderWidth], (x * xZoom) + xPosition + xZoomPosition, ((y * yZoom) + yPosition + yZoomPosition));
+				for(int yZoomPosition = 0; yZoomPosition < yZoom; yZoomPosition++)
+					for(int xZoomPosition = 0; xZoomPosition < xZoom; xZoomPosition++)
+						setPixel(renderPixels[x + y * renderWidth], (x * xZoom) + xPosition + xZoomPosition, ((y * yZoom) + yPosition + yZoomPosition));
 	}
 
 	private void setPixel(int pixel, int x, int y) 

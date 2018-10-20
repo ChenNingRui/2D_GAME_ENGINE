@@ -3,24 +3,29 @@ package basic.system;
 import java.awt.Canvas;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import basic.component.InputComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.world.World;
 
-public class InputSystem implements System, KeyListener {
-	private Canvas canvas;
-	private World world;
+public class InputSystem implements System, KeyListener, MouseListener {
+	//private Canvas canvas;
+	//private World world;
 	private Entity player;
+	private InputComponent inputcomponent;
 	
 	public InputSystem(World world,Canvas canvas) {
-		this.world = world;
+		//this.world = world;
 		
-		this.canvas = canvas;
-		this.canvas.addKeyListener(this);
+		canvas.addKeyListener(this);
+		canvas.addMouseListener(this);
+		
 		
 		player = world.getEntityByName("player");
+		inputcomponent = (InputComponent) world.getComponentByEntity(ComponentType.input, player);
 	}
 	
 	@Override
@@ -46,16 +51,48 @@ public class InputSystem implements System, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		InputComponent inputcomponent = (InputComponent) world.getComponentByEntity(ComponentType.input, player);
 		inputcomponent.setCurKeyCode(e.getKeyCode());
-		inputcomponent.setPress(true);
+		inputcomponent.setKeyPress(true);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		InputComponent inputcomponent = (InputComponent) world.getComponentByEntity(ComponentType.input, player);
-		inputcomponent.setPress(false);
+		inputcomponent.setKeyPress(false);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		inputcomponent.setMousePress(true);
+		// TODO Auto-generated method stub
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			inputcomponent.setMouseX(e.getX());
+			inputcomponent.setMouseY(e.getY());
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		inputcomponent.setMousePress(false);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

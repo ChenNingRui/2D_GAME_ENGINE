@@ -33,7 +33,7 @@ public class MoveSystem implements System {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(playerInput.isPress()) {
+		if(playerInput.isKeyPress()) {
 			switch(playerInput.getCurKeyCode()) {
 			case KeyEvent.VK_W://up
 				playerMove.setDirection(ORIENTATION.NORTH);

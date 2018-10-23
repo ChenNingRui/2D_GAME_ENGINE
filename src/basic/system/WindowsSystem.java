@@ -3,6 +3,8 @@ package basic.system;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -68,15 +70,21 @@ public class WindowsSystem extends JFrame implements System{
 		
 		for(int i = 0; i < renderList.size(); i++) {
 			TextureComponent texture = renderList.get(i);
+			if(texture.isRotate()) {
+				texture.setImage(rotateImage(texture.getImage(), texture.getAngle()));
+				texture.setWidth(texture.getImage().getWidth());
+				texture.setHeight(texture.getImage().getHeight());
+				texture.setRotate(false);
+			}
 			renderImage(texture.getImage(),
-					texture.getLocationX(), texture.getLocationY(), 
+					texture.getLocationX(), texture.getLocationY(),
 					texture.getZoomX(), texture.getZoomY());
 		}
+		
 		
 		graphics.drawImage(view, 0, 0, null);
 		graphics.dispose();
 		bufferStragegy.show();
-		
 		clear();
 	}
 	
@@ -114,6 +122,21 @@ public class WindowsSystem extends JFrame implements System{
 	{
 		for(int i = 0; i < pixels.length; i++)
 			pixels[i] = 0;
+	}
+	
+	private BufferedImage rotateImage(BufferedImage image, double angle) {
+	    int width = image.getWidth();    
+	    int height = image.getHeight();
+		
+		AffineTransform tx = new AffineTransform();
+	    tx.rotate(Math.toRadians(angle), width / 2, height / 2);
+
+	    AffineTransformOp op = new AffineTransformOp(tx,
+	        AffineTransformOp.TYPE_BILINEAR);
+	    image = op.filter(image, null);
+
+		
+	    return image;
 	}
 		
 	//Render our image to our array of pixels.

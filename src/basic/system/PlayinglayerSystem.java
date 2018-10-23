@@ -19,8 +19,8 @@ public class PlayinglayerSystem implements System {
 		// TODO Auto-generated method stub
 		player = world.createEntity("player");
 		player.addComponent(new InputComponent());
-		player.addComponent(new MoveComponent(0, 7, ORIENTATION.SOUTH));
-		player.addComponent(new TextureComponent("enemyRed5.png", 200, 200, 1, 1));
+		player.addComponent(new MoveComponent(0, 10, ORIENTATION.SOUTH));
+		player.addComponent(new TextureComponent("enemyRed5.png", 200, 200, 180, 1, 1));
 	}
 
 	@Override

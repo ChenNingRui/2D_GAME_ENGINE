@@ -117,6 +117,7 @@ public class World{
 	public BufferedImage getImageByTextureComponent(TextureComponent textureComponent) {
 		JSONObject jsonObject = json.getObjByName(textureComponent.getTextureName());
 		BufferedImage image = GraphicsLoad.getImgageByJson(jsonObject);
+		
 		textureComponent.setImage(image);
 		
 		return textureComponent.getImage();

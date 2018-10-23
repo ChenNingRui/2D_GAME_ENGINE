@@ -13,17 +13,21 @@ public class TextureComponent extends Component {
 	private int zoomY;
 	private int width;
 	private int height;
+	private double angle;
+	private boolean rotate;
 	
 	public TextureComponent(String textureName, 
-			int locationX, int locationY,
+			int locationX, int locationY, double angle,
 			int zoomX, int zoomY) {
 		
 		type = ComponentType.texture;
 		this.textureName = textureName;
 		this.locationX = locationX;
 		this.locationY = locationY;
+		this.angle = angle;
 		this.zoomX = zoomX;
 		this.zoomY = zoomY;
+		this.rotate = true;
 	}
 	
 	public BufferedImage getImage() {
@@ -85,5 +89,22 @@ public class TextureComponent extends Component {
 	public void setZoomY(int zoomY) {
 		this.zoomY = zoomY;
 	}
+
+	public boolean isRotate() {
+		return rotate;
+	}
+
+	public void setRotate(boolean rotate) {
+		this.rotate = rotate;
+	}
+
+	public double getAngle() {
+		return angle;
+	}
+
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+
 
 }

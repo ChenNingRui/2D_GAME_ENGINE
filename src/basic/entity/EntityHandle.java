@@ -11,6 +11,10 @@ public class EntityHandle {
 		this.entity = entity;
 		this.world = world;
 	}
+	
+	public Entity getEntity() {
+		return entity;
+	}
 
 	public void destoryEntity() {
 		world.destroyEntity(entity);

@@ -4,6 +4,9 @@ import javax.imageio.ImageIO;
 import org.json.simple.JSONObject;
 
 import basic.component.GraphicsCompoment;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +31,7 @@ public class GraphicsLoadSystem implements System{
 		}
     }
     
-    public BufferedImage getImgageByJson(JSONObject jsonObj) {
+    public Image getImgageByJson(JSONObject jsonObj) {
     	int width = Integer.parseInt(jsonObj.get("width").toString());
     	int height = Integer.parseInt(jsonObj.get("height").toString());
     	int x = Integer.parseInt(jsonObj.get("x").toString());
@@ -37,7 +40,9 @@ public class GraphicsLoadSystem implements System{
     	BufferedImage image = new BufferedImage(width, 
     			height, BufferedImage.TYPE_INT_RGB);
     	image.getGraphics().drawImage(compoment.getImage(), -x, -y, null);
-    	return image;
+    	
+    	Image fxImage = SwingFXUtils.toFXImage(image, null);
+    	return fxImage;
     }
 
 	@Override

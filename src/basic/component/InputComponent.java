@@ -4,8 +4,8 @@ import basic.component.manager.ComponentType;
 
 public class InputComponent extends Component {
 	private int curKeyCode;
-	private int mouseX;
-	private int mouseY;
+	private double mouseX;
+	private double mouseY;
 	private boolean keyPress;
 	private boolean mousePress;
 	
@@ -21,19 +21,19 @@ public class InputComponent extends Component {
 		this.curKeyCode = curKeyCode;
 	}
 
-	public int getMouseX() {
+	public double getMouseX() {
 		return mouseX;
 	}
 
-	public void setMouseX(int mouseX) {
+	public void setMouseX(double mouseX) {
 		this.mouseX = mouseX;
 	}
 
-	public int getMouseY() {
+	public double getMouseY() {
 		return mouseY;
 	}
 
-	public void setMouseY(int mouseY) {
+	public void setMouseY(double mouseY) {
 		this.mouseY = mouseY;
 	}
 

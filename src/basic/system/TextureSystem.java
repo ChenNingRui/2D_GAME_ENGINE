@@ -1,6 +1,5 @@
 package basic.system;
 
-import java.awt.image.BufferedImage;
 
 import basic.component.InputComponent;
 import basic.component.MoveComponent;
@@ -9,7 +8,7 @@ import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.world.World;
 
-public class TextureSystem implements System {
+public class TextureSystem implements System{
 	//private World world;
 	private Entity player;
 	private TextureComponent playerTexture;
@@ -22,8 +21,7 @@ public class TextureSystem implements System {
 		playerMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, player);
 		playerInput = (InputComponent) world.getComponentByEntity(ComponentType.input, player);
 		playerTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player);
-		BufferedImage playerImage = world.getImageByTextureComponent(playerTexture);
-		playerTexture.setImage(playerImage);
+		world.getImageByTextureComponent(playerTexture);
 		world.AddToStage(playerTexture);
 	}
 
@@ -71,7 +69,6 @@ public class TextureSystem implements System {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-
 	}
 
 }

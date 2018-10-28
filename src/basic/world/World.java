@@ -1,5 +1,4 @@
 package basic.world;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
@@ -8,6 +7,8 @@ import basic.component.*;
 import basic.component.manager.*;
 import basic.entity.*;
 import basic.system.*;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class World{
 	
@@ -16,6 +17,7 @@ public class World{
 	private WindowsSystem windows;
 	private JsonSystem json;
 	private GraphicsLoadSystem GraphicsLoad;
+	@SuppressWarnings("unused")
 	private InputSystem input;
 	private MoveSystem move;
 	private PlayinglayerSystem playinglayer;
@@ -36,15 +38,15 @@ public class World{
 		
 		json.loadJson("src/Spritesheet/sheet.json");
 		GraphicsLoad.loadGraphics("src/Spritesheet/sheet.png");
-		windows.showWindows();
 	}
 	
-	public void gameLayer() {
+	public void gameLayer(Stage primaryStage) throws Exception {
     	playinglayer = new PlayinglayerSystem(this);
     	playinglayer.instantiation();
-    	input = new InputSystem(this, windows.getCanvas());
     	move = new MoveSystem(this);
     	texture = new TextureSystem(this);
+    	windows.showWindow(primaryStage);
+    	input = new InputSystem(this, primaryStage);
 	}
 	
 	//destory this world
@@ -67,10 +69,6 @@ public class World{
 		managerMap.get(component.getType()).addComponent(entity, component);
 	}
 	
-	// Remove a component from an entity
-	// wakes up every 16 milliseconds, 
-	// renders every Entity that has the 
-	// Renderable Component, and then goes back to sleep.
 	public void removeComponent(Entity entity, Component component) {
 		managerMap.get(component.getType()).removeComponentByEntity(entity);
 	}
@@ -114,43 +112,18 @@ public class World{
     	windows.removeFromStage(textureComponent);
     }
     
-	public BufferedImage getImageByTextureComponent(TextureComponent textureComponent) {
+	public Image getImageByTextureComponent(TextureComponent textureComponent) {
 		JSONObject jsonObject = json.getObjByName(textureComponent.getTextureName());
-		BufferedImage image = GraphicsLoad.getImgageByJson(jsonObject);
-		
+		Image image = GraphicsLoad.getImgageByJson(jsonObject);
 		textureComponent.setImage(image);
 		
-		return textureComponent.getImage();
+		return image;
 	}
     
-	public void run() {
-		long lastTime = java.lang.System.nanoTime(); //long 2^63
-		double nanoSecondConversion = 1000000000.0 / 60; //60 frames per second
-		double changeInSeconds = 0;
-		
-		while(true) {
-			long now = java.lang.System.nanoTime();
-
-			changeInSeconds += (now - lastTime) / nanoSecondConversion;
-			while(changeInSeconds >= 1) {
-				update();
-				changeInSeconds--;
-			}
-
-			lastTime = now;
-			render();
-		}
-	}
-	
-	//drawn the entity on stage in each frame
-	private void render() {
-		windows.render();
-		texture.render();
-	}
-	
-	//updated the entity's data in each frames
-	private void update() {
+	public void run() {	
+//		double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 		move.update();
+		texture.render();
+		windows.render();
 	}
-
 }

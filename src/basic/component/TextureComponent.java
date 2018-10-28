@@ -1,14 +1,14 @@
 package basic.component;
-import java.awt.image.BufferedImage;
 
 import basic.component.Component;
 import basic.component.manager.ComponentType;
+import javafx.scene.image.Image;
 
 public class TextureComponent extends Component {
 	private String textureName;
-	private BufferedImage image;
-	private int locationX;
-	private int locationY;
+	private Image image;
+	private double locationX;
+	private double locationY;
 	private int zoomX;
 	private int zoomY;
 	private int width;
@@ -16,8 +16,8 @@ public class TextureComponent extends Component {
 	private double angle;
 	private boolean rotate;
 	
-	public TextureComponent(String textureName, 
-			int locationX, int locationY, double angle,
+	public TextureComponent(String textureName, double angle,
+			double locationX, double locationY,
 			int zoomX, int zoomY) {
 		
 		type = ComponentType.texture;
@@ -30,11 +30,11 @@ public class TextureComponent extends Component {
 		this.rotate = true;
 	}
 	
-	public BufferedImage getImage() {
+	public Image getImage() {
 		return this.image;
 	}
 	
-	public void setImage(BufferedImage image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 
@@ -52,22 +52,6 @@ public class TextureComponent extends Component {
 
 	public void setWidth(int width) {
 		this.width = width;
-	}
-
-	public int getLocationX() {
-		return locationX;
-	}
-
-	public void setLocationX(int locationX) {
-		this.locationX = locationX;
-	}
-
-	public int getLocationY() {
-		return locationY;
-	}
-
-	public void setLocationY(int locationY) {
-		this.locationY = locationY;
 	}
 
 	public String getTextureName() {
@@ -104,6 +88,22 @@ public class TextureComponent extends Component {
 
 	public void setAngle(double angle) {
 		this.angle = angle;
+	}
+
+	public double getLocationX() {
+		return locationX;
+	}
+
+	public void setLocationX(double locationX) {
+		this.locationX = locationX;
+	}
+
+	public double getLocationY() {
+		return locationY;
+	}
+
+	public void setLocationY(double locationY) {
+		this.locationY = locationY;
 	}
 
 

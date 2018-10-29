@@ -50,7 +50,6 @@ public class TextureSystem implements System{
 					playerTexture.setLocationX(playerInput.getMouseX());
 			}
 			
-			
 			if (playerTexture.getLocationY() < playerInput.getMouseY())
 			{
 				playerTexture.setLocationY(playerTexture.getLocationY() + playerMove.getVelocity());

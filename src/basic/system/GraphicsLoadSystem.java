@@ -23,11 +23,11 @@ public class GraphicsLoadSystem implements System{
     	try {
 			BufferedImage loadedImage = ImageIO.read(new FileInputStream(compoment.getPath()));
 			compoment.setImage(new BufferedImage(loadedImage.getWidth(), 
-					loadedImage.getHeight(), BufferedImage.TYPE_INT_RGB));
+					loadedImage.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE));
 			compoment.getImage().getGraphics().drawImage(loadedImage, 0, 0, null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace(); 
+			e.printStackTrace();
 		}
     }
     
@@ -38,8 +38,10 @@ public class GraphicsLoadSystem implements System{
     	int y = Integer.parseInt(jsonObj.get("y").toString());
     	
     	BufferedImage image = new BufferedImage(width, 
-    			height, BufferedImage.TYPE_INT_RGB);
+    			height, BufferedImage.TYPE_INT_ARGB_PRE);
     	image.getGraphics().drawImage(compoment.getImage(), -x, -y, null);
+    	//image.getGraphics().setColor(Color.white);
+    	//image.getGraphics().fillRect(0, 0, compoment.getImage().getWidth(), compoment.getImage().getHeight());
     	
     	Image fxImage = SwingFXUtils.toFXImage(image, null);
     	return fxImage;

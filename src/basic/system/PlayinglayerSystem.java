@@ -24,8 +24,8 @@ public class PlayinglayerSystem implements System {
 		// TODO Auto-generated method stub
 		player = world.createEntity("player");
 		player.addComponent(new InputComponent());
-		player.addComponent(new MoveComponent(0, 10, ORIENTATION.SOUTH));
-		player.addComponent(new TextureComponent("enemyRed5.png", 45, 200, 200, 1, 1));
+		player.addComponent(new MoveComponent(0, 20, ORIENTATION.SOUTH));
+		player.addComponent(new TextureComponent("enemyRed5.png", 180, 200, 200, 1, 1));
 		
 		bulletPool = new ArrayList<Entity>();
 	}

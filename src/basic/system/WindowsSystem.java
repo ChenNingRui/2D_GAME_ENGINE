@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import basic.component.*;
 
 public class WindowsSystem implements System{
-	
-	public static int alpha = 0xFFFF00DC;
 	
 	private WindowsComponent component;
 	private GraphicsContext graphics;
@@ -26,15 +28,7 @@ public class WindowsSystem implements System{
 		init();
 	}
 	
-	public void showWindow(Stage primaryStage) throws Exception {
-		primaryStage.setWidth(component.getBoundWidth());
-		primaryStage.setHeight(component.getBoundHeight());
-		primaryStage.setResizable(false);
-        primaryStage.setTitle("ECS");
-        primaryStage.setScene(new Scene(root));
-	}
-	
-	public void init() {
+	private void init() {
 		component.setBoundX(0);
 		component.setBoundY(0);
 		component.setBoundWidth(600);
@@ -50,6 +44,15 @@ public class WindowsSystem implements System{
 		root.getChildren().add(canvas);
 	}
 	
+	private Image imageRotation(Image image, double angle) {
+		ImageView imageView = new ImageView(image);
+		imageView.setRotate(angle);
+		SnapshotParameters params = new SnapshotParameters();
+		params.setFill(Color.TRANSPARENT);
+		Image rotatedImage = imageView.snapshot(params, null);
+		return rotatedImage;
+	}
+	
 	@Override
 	public void instantiation() {
 		// TODO Auto-generated method stub
@@ -61,6 +64,10 @@ public class WindowsSystem implements System{
 		for(int i = 0; i < renderList.size(); i++) {
 			TextureComponent texture = renderList.get(i);
 			graphics.clearRect(0, 0, component.getBoundWidth(), component.getBoundHeight());
+			if(texture.isRotate()) {
+				texture.setRotate(false);
+				texture.setImage(imageRotation(texture.getImage(), texture.getAngle()));
+			}
 			graphics.drawImage(texture.getImage(), 
 					texture.getLocationX(), texture.getLocationY());
 		}
@@ -70,11 +77,6 @@ public class WindowsSystem implements System{
 		// TODO Auto-generated method stub
 	}
 	
-	public Canvas getCanvas()
-	{
-		return canvas;
-	}	
-	
 	public void addToStage(TextureComponent textureComponent) {
 		renderList.add(textureComponent);
 	}
@@ -82,4 +84,17 @@ public class WindowsSystem implements System{
 	public void removeFromStage(TextureComponent textureComponent) {
 		renderList.remove(textureComponent);
 	}
+	
+	public void showWindow(Stage primaryStage) throws Exception {
+		primaryStage.setWidth(component.getBoundWidth());
+		primaryStage.setHeight(component.getBoundHeight());
+		primaryStage.setResizable(false);
+        primaryStage.setTitle("ECS");
+        primaryStage.setScene(new Scene(root));
+	}
+	
+	public Canvas getCanvas()
+	{
+		return canvas;
+	}	
 }

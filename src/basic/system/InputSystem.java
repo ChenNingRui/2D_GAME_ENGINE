@@ -22,7 +22,7 @@ public class InputSystem implements System{
 				inputcomponent.setMouseY(event.getY());
 				inputcomponent.setMousePress(true);
 				
-				java.lang.System.out.print(event.getX() + "  "+ event.getY());
+//				java.lang.System.out.print(event.getX() + "  "+ event.getY());
 			} 
 			else if(event.getEventType() == MouseEvent.MOUSE_RELEASED) {
 				inputcomponent.setMousePress(false);

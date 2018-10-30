@@ -7,9 +7,10 @@ import basic.component.MoveComponent.ORIENTATION;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.entity.EntityHandle;
+import basic.event.KeyBoardEventListener;
 import basic.world.World;
 
-public class PlayinglayerSystem implements System {
+public class PlayinglayerSystem implements System, KeyBoardEventListener{
 
 	private World world;
 	private EntityHandle player;
@@ -61,5 +62,13 @@ public class PlayinglayerSystem implements System {
 	public void update() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void pressTheKey() {
+		// TODO Auto-generated method stub
+		//java.lang.System.out.print("fight");
+		//createBullet();
+		java.lang.System.out.print("创造子弹");
 	}
 }

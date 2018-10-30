@@ -6,9 +6,7 @@
 	<classpathentry kind="lib" path="/Users/chenningrui/Downloads/commons-io-2.6/commons-io-2.6-sources.jar"/>
 	<classpathentry kind="lib" path="/Users/chenningrui/Downloads/commons-io-2.6/commons-io-2.6-test-sources.jar"/>
 	<classpathentry kind="lib" path="/Users/chenningrui/Downloads/commons-io-2.6/commons-io-2.6-tests.jar"/>
-	<classpathentry kind="lib" path="/Users/chenningrui/eclipse-workspace/2D_GAME_ENGINE/bin/json-lib-2.0-jdk15.jar"/>
+	<classpathentry kind="lib" path="/Users/chenningrui/eclipse-workspace/2D_GAME_ENGINE/bin/json-simple-1.1.1-sources.jar"/>
 	<classpathentry kind="lib" path="/Users/chenningrui/eclipse-workspace/2D_GAME_ENGINE/bin/json-simple-1.1.jar"/>
-	<classpathentry kind="lib" path="/Users/chenningrui/eclipse-workspace/2D_GAME_ENGINE/bin/java-json.jar"/>
-	<classpathentry kind="lib" path="/Users/chenningrui/eclipse-workspace/2D_GAME_ENGINE/bin/apache-commons.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

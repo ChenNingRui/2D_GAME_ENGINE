@@ -1,7 +1,5 @@
 package basic.system;
 
-import java.awt.event.KeyEvent;
-
 import basic.component.InputComponent;
 import basic.component.MoveComponent;
 import basic.component.MoveComponent.ORIENTATION;
@@ -30,21 +28,22 @@ public class MoveSystem implements System {
 		// TODO Auto-generated method stub
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
 		if(playerInput.isKeyPress()) {
 			switch(playerInput.getCurKeyCode()) {
-			case KeyEvent.VK_W://up
+			case W://up
 				playerMove.setDirection(ORIENTATION.NORTH);
 				break;
-			case KeyEvent.VK_S://down
+			case S://down
 				playerMove.setDirection(ORIENTATION.SOUTH);
 				break;
-			case KeyEvent.VK_A://left
+			case A://left
 				playerMove.setDirection(ORIENTATION.WEST);
 				break;
-			case KeyEvent.VK_D://right
+			case D://right
 				playerMove.setDirection(ORIENTATION.EAST);
 				break;
 			}

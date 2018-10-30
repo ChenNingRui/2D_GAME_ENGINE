@@ -47,6 +47,7 @@ public class World{
     	texture = new TextureSystem(this);
     	windows.showWindow(primaryStage);
     	input = new InputSystem(this, primaryStage);
+    	input.addListener(playinglayer);
 	}
 	
 	//destory this world

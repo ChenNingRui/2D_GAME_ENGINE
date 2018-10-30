@@ -1,9 +1,10 @@
 package basic.component;
 
 import basic.component.manager.ComponentType;
+import javafx.scene.input.KeyCode;
 
 public class InputComponent extends Component {
-	private int curKeyCode;
+	private KeyCode curKeyCode;
 	private double mouseX;
 	private double mouseY;
 	private boolean keyPress;
@@ -13,11 +14,11 @@ public class InputComponent extends Component {
 		type = ComponentType.input;
 	}
 	
-	public int getCurKeyCode() {
+	public KeyCode getCurKeyCode() {
 		return curKeyCode;
 	}
 
-	public void setCurKeyCode(int curKeyCode) {
+	public void setCurKeyCode(KeyCode curKeyCode) {
 		this.curKeyCode = curKeyCode;
 	}
 

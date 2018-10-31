@@ -92,14 +92,13 @@ public class MoveSystem implements System, CreateBulletEventListener {
 				Entity bullet = bulletList.get(i);
 				TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
 				if(bulletTexture.getLocationY() <= 100) {
-					java.lang.System.out.println("yes");
 					MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, bullet);
 					world.removeFromStage(bulletTexture);
 					world.removeComponent(bullet, bulletMove);
 					world.removeComponent(bullet, bulletTexture);
 					bulletList.remove(i);
 					world.destroyEntity(bullet);
-					java.lang.System.out.println("no");
+					//java.lang.System.out.println("no");
 				}
 			}
 		}
@@ -108,7 +107,7 @@ public class MoveSystem implements System, CreateBulletEventListener {
 	@Override
 	public void onCreateBulletEvent(ArrayList<Entity> bulletList) {
 		// TODO Auto-generated method stub
-		java.lang.System.out.println("ok");
+		//java.lang.System.out.println("ok");
 		this.bulletList = bulletList;
 	}
 

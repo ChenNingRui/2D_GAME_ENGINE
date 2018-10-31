@@ -31,6 +31,7 @@ public class ComponentManager {
 				obj = null;
 			}
 		}
+		java.lang.System.out.println("objList: " + objList.size());
 	}
 	
 	public void clearAll() {

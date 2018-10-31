@@ -28,6 +28,7 @@ public class ComponentManager {
 			ECObject obj = objList.get(i);
 			if(obj.getEntity() == entity) {
 				objList.remove(i);
+				obj = null;
 			}
 		}
 	}

@@ -1,21 +1,30 @@
 package basic.system;
 
+import java.util.ArrayList;
+
 import basic.component.InputComponent;
 import basic.component.MoveComponent;
 import basic.component.MoveComponent.ORIENTATION;
+import basic.component.TextureComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
+import basic.event.CreateBulletEventListener;
 import basic.world.World;
 
-public class MoveSystem implements System {
+public class MoveSystem implements System, CreateBulletEventListener {
+	private World world;
 	private Entity player;
 	private InputComponent playerInput;
 	private MoveComponent playerMove;
+	private TextureComponent playerTexture;
+	private ArrayList<Entity> bulletList;
 	
 	public MoveSystem(World world) {
+		this.world = world;
 		player = world.getEntityByName("player");
 		playerInput = (InputComponent) world.getComponentByEntity(ComponentType.input, player);
 		playerMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, player);
+		playerTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player);
 	}
 
 	@Override
@@ -48,6 +57,59 @@ public class MoveSystem implements System {
 				break;
 			}
 		}
+		
+		
+		if(playerInput.isMousePress()) {
+			if (playerTexture.getLocationX() < playerInput.getMouseX())
+			{
+				playerTexture.setLocationX(playerTexture.getLocationX() + playerMove.getVelocity());
+				if (playerTexture.getLocationX() > playerInput.getMouseX())
+					playerTexture.setLocationX(playerInput.getMouseX());
+			}
+			else if (playerTexture.getLocationX() > playerInput.getMouseX())
+			{
+				playerTexture.setLocationX(playerTexture.getLocationX() - playerMove.getVelocity());
+				if (playerTexture.getLocationX() < playerInput.getMouseX())
+					playerTexture.setLocationX(playerInput.getMouseX());
+			}
+			
+			if (playerTexture.getLocationY() < playerInput.getMouseY())
+			{
+				playerTexture.setLocationY(playerTexture.getLocationY() + playerMove.getVelocity());
+				if (playerTexture.getLocationY() > playerInput.getMouseY())
+					playerTexture.setLocationY(playerInput.getMouseY());
+			}
+			else if (playerTexture.getLocationY() > playerInput.getMouseY())
+			{
+				playerTexture.setLocationY(playerTexture.getLocationY() - playerMove.getVelocity());
+				if (playerTexture.getLocationY() < playerInput.getMouseY())
+					playerTexture.setLocationY(playerInput.getMouseY());
+			}
+		}
+		
+		if(bulletList != null && bulletList.size() != 0) {
+			for(int i = 0; i < bulletList.size(); i++) {
+				Entity bullet = bulletList.get(i);
+				TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
+				if(bulletTexture.getLocationY() <= 100) {
+					java.lang.System.out.println("yes");
+					MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, bullet);
+					world.removeFromStage(bulletTexture);
+					world.removeComponent(bullet, bulletMove);
+					world.removeComponent(bullet, bulletTexture);
+					bulletList.remove(i);
+					world.destroyEntity(bullet);
+					java.lang.System.out.println("no");
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onCreateBulletEvent(ArrayList<Entity> bulletList) {
+		// TODO Auto-generated method stub
+		java.lang.System.out.println("ok");
+		this.bulletList = bulletList;
 	}
 
 }

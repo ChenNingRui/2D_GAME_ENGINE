@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class InputSystem implements System{
 	private Entity player;
 	private InputComponent inputcomponent;
-	private ArrayList<KeyBoardEventListener> listenerList = new ArrayList<KeyBoardEventListener>();
+	private ArrayList<KeyBoardEventListener> keyPresslistenerList = new ArrayList<KeyBoardEventListener>();
 	
 	private EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>() {
 		@Override
@@ -79,13 +79,13 @@ public class InputSystem implements System{
 		// TODO Auto-generated method stub
 	}
 
-	public void addListener(KeyBoardEventListener listener) {
-		listenerList.add(listener);
+	public void addKeyPressListener(KeyBoardEventListener listener) {
+		keyPresslistenerList.add(listener);
 	}
 	
 	private void onPressKeyEvent() {
-		for(KeyBoardEventListener listener : listenerList) {
-			listener.pressTheKey();
+		for(KeyBoardEventListener listener : keyPresslistenerList) {
+			listener.onPressTheKey();
 		}
 	}
 }

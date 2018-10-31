@@ -99,7 +99,7 @@ public class TextureComponent extends Component {
 	}
 
 	public double getLocationY() {
-		return locationY;
+  		return locationY;
 	}
 
 	public void setLocationY(double locationY) {

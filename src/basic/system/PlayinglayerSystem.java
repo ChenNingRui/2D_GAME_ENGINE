@@ -7,6 +7,7 @@ import basic.component.MoveComponent.ORIENTATION;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.entity.EntityHandle;
+import basic.event.CreateBulletEventListener;
 import basic.event.KeyBoardEventListener;
 import basic.world.World;
 
@@ -14,7 +15,9 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener{
 
 	private World world;
 	private EntityHandle player;
-	private ArrayList<Entity> bulletPool;
+	private ArrayList<Entity> bulletList;
+	
+	private ArrayList<CreateBulletEventListener> createBulletlistenerList = new ArrayList<CreateBulletEventListener>();
 	
 	public PlayinglayerSystem(World world) {
 		this.world = world;
@@ -28,29 +31,22 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener{
 		player.addComponent(new MoveComponent(0, 20, ORIENTATION.SOUTH));
 		player.addComponent(new TextureComponent("enemyRed5.png", 180, 200, 200, 1, 1));
 		
-		bulletPool = new ArrayList<Entity>();
+		bulletList = new ArrayList<Entity>();
 	}
 	
 	public Entity createBullet() {
 		TextureComponent playTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player.getEntity());
-		EntityHandle bullet = world.createEntity("bullet" + bulletPool.size());
+		EntityHandle bullet = world.createEntity("bullet" + bulletList.size());
 		bullet.addComponent(new MoveComponent(0, 10, ORIENTATION.SOUTH));
-		player.addComponent(new TextureComponent("beam1.png", 180, playTexture.getLocationX(), playTexture.getLocationY(), 1, 1));
+		bullet.addComponent(new TextureComponent("fire03.png", 180, (playTexture.getLocationX() + 40), playTexture.getLocationY() + 10, 1, 1));
 		
-		bulletPool.add(bullet.getEntity());
+		bulletList.add(bullet.getEntity());
 		
 		return bullet.getEntity();
 	}
 	
-	public void removeBullet(Entity bullet) {
-		int index = bulletPool.indexOf(bullet);
-		if(index != -1) {
-			bulletPool.remove(index);
-		}
-	}
-	
-	public void clearBulletList() {
-		bulletPool.clear();
+	public void addCreateBulletListener(CreateBulletEventListener listener) {
+		createBulletlistenerList.add(listener);
 	}
 
 	@Override
@@ -60,15 +56,16 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		// TODO Auto -generated method stub
 	}
 
 	@Override
-	public void pressTheKey() {
+	public void onPressTheKey() {
 		// TODO Auto-generated method stub
 		//java.lang.System.out.print("fight");
-		//createBullet();
-		java.lang.System.out.print("创造子弹");
+		createBullet();
+		for(CreateBulletEventListener listener : createBulletlistenerList) {
+			listener.onCreateBulletEvent(bulletList);
+		}
 	}
 }

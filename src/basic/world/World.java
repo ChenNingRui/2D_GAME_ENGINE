@@ -17,7 +17,6 @@ public class World{
 	private WindowsSystem windows;
 	private JsonSystem json;
 	private GraphicsLoadSystem GraphicsLoad;
-	@SuppressWarnings("unused")
 	private InputSystem input;
 	private MoveSystem move;
 	private PlayinglayerSystem playinglayer;
@@ -43,11 +42,13 @@ public class World{
 	public void gameLayer(Stage primaryStage) throws Exception {
     	playinglayer = new PlayinglayerSystem(this);
     	playinglayer.instantiation();
-    	move = new MoveSystem(this);
     	texture = new TextureSystem(this);
     	windows.showWindow(primaryStage);
     	input = new InputSystem(this, primaryStage);
-    	input.addListener(playinglayer);
+    	input.addKeyPressListener(playinglayer);
+    	move = new MoveSystem(this);
+    	playinglayer.addCreateBulletListener(texture);
+    	playinglayer.addCreateBulletListener(move);
 	}
 	
 	//destory this world
@@ -87,6 +88,9 @@ public class World{
     	return managerMap.get(ComponentType).getComponentByEntity(entity);
     }
     
+    public WindowsComponent getWindowsComponent() {
+    	return windows.getWindowsComponent();
+    }
 	///------------------------- entity -------------------------///
     // Destroy an entity and all its components
     public void destroyEntity(Entity e) {
@@ -123,8 +127,8 @@ public class World{
     
 	public void run() {	
 //		double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-		move.update();
 		texture.render();
 		windows.render();
+		move.update();
 	}
 }

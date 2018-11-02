@@ -9,6 +9,7 @@ import basic.component.TextureComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.event.CreateBulletEventListener;
+import basic.event.RemoveBulletEventListener;
 import basic.world.World;
 
 public class MoveSystem implements System, CreateBulletEventListener {
@@ -18,6 +19,7 @@ public class MoveSystem implements System, CreateBulletEventListener {
 	private MoveComponent playerMove;
 	private TextureComponent playerTexture;
 	private ArrayList<Entity> bulletList;
+	private ArrayList<RemoveBulletEventListener> removeBulletlistenerList = new ArrayList<RemoveBulletEventListener>();
 	
 	public MoveSystem(World world) {
 		this.world = world;
@@ -26,6 +28,11 @@ public class MoveSystem implements System, CreateBulletEventListener {
 		playerMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, player);
 		playerTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player);
 	}
+	
+	public void addRemoveBulletListener(RemoveBulletEventListener listener) {
+		removeBulletlistenerList.add(listener);
+	}
+	
 
 	@Override
 	public void instantiation() {
@@ -92,13 +99,10 @@ public class MoveSystem implements System, CreateBulletEventListener {
 				Entity bullet = bulletList.get(i);
 				TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
 				if(bulletTexture.getLocationY() <= 100) {
-					MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, bullet);
-					world.removeFromStage(bulletTexture);
-					world.removeComponent(bullet, bulletMove);
-					world.removeComponent(bullet, bulletTexture);
-					bulletList.remove(i);
-					world.destroyEntity(bullet);
-					//java.lang.System.out.println("no");
+					for(RemoveBulletEventListener listener : removeBulletlistenerList) {
+						listener.onRemoveBulletEvent(bullet);
+					}
+					//java.lang.System.out.println("no " + bulletList.size());
 				}
 			}
 		}

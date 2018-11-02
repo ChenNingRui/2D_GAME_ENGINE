@@ -19,7 +19,6 @@ public class TextureComponent extends Component {
 	public TextureComponent(String textureName, double angle,
 			double locationX, double locationY,
 			int zoomX, int zoomY) {
-		
 		type = ComponentType.texture;
 		this.textureName = textureName;
 		this.locationX = locationX;

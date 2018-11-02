@@ -9,9 +9,10 @@ import basic.entity.Entity;
 import basic.entity.EntityHandle;
 import basic.event.CreateBulletEventListener;
 import basic.event.KeyBoardEventListener;
+import basic.event.RemoveBulletEventListener;
 import basic.world.World;
 
-public class PlayinglayerSystem implements System, KeyBoardEventListener{
+public class PlayinglayerSystem implements System, KeyBoardEventListener, RemoveBulletEventListener{
 
 	private World world;
 	private EntityHandle player;
@@ -67,5 +68,18 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener{
 		for(CreateBulletEventListener listener : createBulletlistenerList) {
 			listener.onCreateBulletEvent(bulletList);
 		}
+	}
+
+	@Override
+	public void onRemoveBulletEvent(Entity bullet) {
+		// TODO Auto-generated method stub
+		java.lang.System.out.println("remove");
+		MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, bullet);
+		TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
+		world.removeFromStage(bulletTexture);
+		world.removeComponent(bullet, bulletMove);
+		world.removeComponent(bullet, bulletTexture);
+		bulletList.remove(bullet);
+		world.destroyEntity(bullet);
 	}
 }

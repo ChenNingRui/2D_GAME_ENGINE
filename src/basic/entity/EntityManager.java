@@ -29,6 +29,7 @@ public class EntityManager {
 			Entity temp = list.get(i);
 			if(temp.getName() == name) {
 				list.remove(temp);
+				java.lang.System.out.println("list: " + list.size());
 			}
 		}
 	}

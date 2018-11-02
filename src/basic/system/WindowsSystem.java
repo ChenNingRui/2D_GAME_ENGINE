@@ -84,9 +84,10 @@ public class WindowsSystem implements System{
 	}
 	
 	public void removeFromStage(TextureComponent textureComponent) {
-		boolean is = renderList.remove(textureComponent);
-		java.lang.System.out.println("ok" + is);
-		java.lang.System.out.println("size: " + renderList.size());
+		renderList.remove(textureComponent);
+		//java.lang.System.out.println("size: " + renderList.size());
+		//java.lang.System.out.println("ok " + is);
+		
 	}
 	
 	public void showWindow(Stage primaryStage) throws Exception {

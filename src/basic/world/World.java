@@ -45,10 +45,12 @@ public class World{
     	texture = new TextureSystem(this);
     	windows.showWindow(primaryStage);
     	input = new InputSystem(this, primaryStage);
-    	input.addKeyPressListener(playinglayer);
     	move = new MoveSystem(this);
+    	
+    	input.addKeyPressListener(playinglayer);
     	playinglayer.addCreateBulletListener(texture);
     	playinglayer.addCreateBulletListener(move);
+    	move.addRemoveBulletListener(playinglayer);
 	}
 	
 	//destory this world

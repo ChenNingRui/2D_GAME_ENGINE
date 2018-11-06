@@ -7,18 +7,18 @@ import basic.component.MoveComponent.ORIENTATION;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.entity.EntityHandle;
-import basic.event.CreateBulletEventListener;
-import basic.event.KeyBoardEventListener;
-import basic.event.RemoveBulletEventListener;
+import basic.event.CreateBulletEvent;
+import basic.event.KeyBoardEvent;
+import basic.event.RemoveBulletEvent;
 import basic.world.World;
 
-public class PlayinglayerSystem implements System, KeyBoardEventListener, RemoveBulletEventListener{
+public class PlayinglayerSystem implements System, KeyBoardEvent, RemoveBulletEvent{
 
 	private World world;
 	private EntityHandle player;
 	private ArrayList<Entity> bulletList;
 	private ArrayList<Entity> enemyList;
-	private ArrayList<CreateBulletEventListener> createBulletlistenerList = new ArrayList<CreateBulletEventListener>();
+	private ArrayList<CreateBulletEvent> createBulletlistenerList = new ArrayList<CreateBulletEvent>();
 	
 	public PlayinglayerSystem(World world) {
 		this.world = world;
@@ -81,7 +81,7 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener, Remove
 		}
 	}
 	
-	public void addCreateBulletListener(CreateBulletEventListener listener) {
+	public void addCreateBulletListener(CreateBulletEvent listener) {
 		createBulletlistenerList.add(listener);
 	}
 
@@ -100,7 +100,7 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener, Remove
 		// TODO Auto-generated method stub
 		//java.lang.System.out.print("fight");
 		createBullet();
-		for(CreateBulletEventListener listener : createBulletlistenerList) {
+		for(CreateBulletEvent listener : createBulletlistenerList) {
 			listener.onCreateBulletEvent(bulletList);
 		}
 	}

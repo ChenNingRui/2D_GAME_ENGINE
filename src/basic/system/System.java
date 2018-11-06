@@ -1,9 +1,9 @@
 package basic.system;
 
 public interface System {
-	public void instantiation();
+	void instantiation();
 	
-	public void render();
+	void render();
 	
-	public void update();
+	void update();
 }

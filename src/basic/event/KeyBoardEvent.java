@@ -1,5 +1,5 @@
 package basic.event;
 
-public interface KeyBoardEventListener {
+public interface KeyBoardEvent {
 	public void onPressTheKey();
 }

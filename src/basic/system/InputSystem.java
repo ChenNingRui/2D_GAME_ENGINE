@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import basic.component.InputComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
-import basic.event.KeyBoardEventListener;
+import basic.event.KeyBoardEvent;
 import basic.world.World;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class InputSystem implements System{
 	private Entity player;
 	private InputComponent inputcomponent;
-	private ArrayList<KeyBoardEventListener> keyPresslistenerList = new ArrayList<KeyBoardEventListener>();
+	private ArrayList<KeyBoardEvent> keyPresslistenerList = new ArrayList<KeyBoardEvent>();
 	
 	private EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>() {
 		@Override
@@ -79,12 +79,12 @@ public class InputSystem implements System{
 		// TODO Auto-generated method stub
 	}
 
-	public void addKeyPressListener(KeyBoardEventListener listener) {
+	public void addKeyPressListener(KeyBoardEvent listener) {
 		keyPresslistenerList.add(listener);
 	}
 	
 	private void onPressKeyEvent() {
-		for(KeyBoardEventListener listener : keyPresslistenerList) {
+		for(KeyBoardEvent listener : keyPresslistenerList) {
 			listener.onPressTheKey();
 		}
 	}

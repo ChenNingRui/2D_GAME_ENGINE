@@ -6,10 +6,10 @@ import basic.component.MoveComponent;
 import basic.component.TextureComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
-import basic.event.CreateBulletEventListener;
+import basic.event.CreateBulletEvent;
 import basic.world.World;
 
-public class TextureSystem implements System, CreateBulletEventListener{
+public class TextureSystem implements System, CreateBulletEvent{
 	private World world;
 	private Entity player;
 	private TextureComponent playerTexture;

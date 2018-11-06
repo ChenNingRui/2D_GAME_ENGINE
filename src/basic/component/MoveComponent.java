@@ -1,8 +1,8 @@
 package basic.component;
-import basic.component.Component;
+import basic.component.ComponentBase;
 import basic.component.manager.ComponentType;
 
-public class MoveComponent  extends Component {
+public class MoveComponent  extends ComponentBase {
 	
 	public enum ORIENTATION{
 		EAST,

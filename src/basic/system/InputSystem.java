@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class InputSystem implements System{
+public class InputSystem implements SystemBase{
 	private Entity player;
 	private InputComponent inputcomponent;
 	private ArrayList<KeyBoardEvent> keyPresslistenerList = new ArrayList<KeyBoardEvent>();

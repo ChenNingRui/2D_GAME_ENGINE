@@ -3,7 +3,7 @@ package basic.component;
 import basic.component.manager.ComponentType;
 import javafx.scene.input.KeyCode;
 
-public class InputComponent extends Component {
+public class InputComponent extends ComponentBase {
 	private KeyCode curKeyCode;
 	private double mouseX;
 	private double mouseY;

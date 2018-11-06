@@ -4,13 +4,13 @@ import basic.entity.*;
 
 import java.util.ArrayList;
 
-import basic.component.Component;
+import basic.component.ComponentBase;
 
-public class ComponentManager {
+public abstract class ComponentManagerBase {
 	private ArrayList<ECSObject> objList;
 	protected int type;
 	
-	public ComponentManager() {
+	public ComponentManagerBase() {
 		objList = new ArrayList<ECSObject>();
 	}
 	
@@ -18,7 +18,7 @@ public class ComponentManager {
 		return objList;
 	}
 	
-	public void addComponent(Entity entity, Component component) {
+	public void addComponent(Entity entity, ComponentBase component) {
 		ECSObject obj = new ECSObject(entity, component);
 		objList.add(obj);
 	}
@@ -37,7 +37,7 @@ public class ComponentManager {
 		objList.removeAll(objList);
 	}
 	
-	public Entity getEntityByComponent(Component component) {
+	public Entity getEntityByComponent(ComponentBase component) {
 		for(int i = 0; i < objList.size(); i++) {
 			ECSObject obj = objList.get(i);
 			if(obj.getComponent() == component) {
@@ -47,7 +47,7 @@ public class ComponentManager {
 		return null;
 	}
 	
-	public Component getComponentByEntity(Entity entity) {
+	public ComponentBase getComponentByEntity(Entity entity) {
 		for(int i = 0; i < objList.size(); i++) {
 			ECSObject obj = objList.get(i);
 			if(obj.getEntity() == entity) {

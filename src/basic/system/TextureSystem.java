@@ -9,7 +9,7 @@ import basic.entity.Entity;
 import basic.event.CreateBulletEvent;
 import basic.world.World;
 
-public class TextureSystem implements System, CreateBulletEvent{
+public class TextureSystem implements SystemBase, CreateBulletEvent{
 	private World world;
 	private Entity player;
 	private TextureComponent playerTexture;

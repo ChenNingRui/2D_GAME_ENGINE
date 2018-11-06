@@ -12,7 +12,7 @@ import basic.event.CreateBulletEvent;
 import basic.event.RemoveBulletEvent;
 import basic.world.World;
 
-public class MoveSystem implements System, CreateBulletEvent {
+public class MoveSystem implements SystemBase, CreateBulletEvent {
 	private World world;
 	private Entity player;
 	private InputComponent playerInput;

@@ -1,6 +1,6 @@
 package basic.system;
 
-public interface System {
+public interface SystemBase {
 	void instantiation();
 	
 	void render();

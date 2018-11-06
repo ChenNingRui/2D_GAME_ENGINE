@@ -2,7 +2,7 @@ package basic.component;
 
 import basic.component.manager.ComponentType;
 
-public class WindowsComponent extends Component{
+public class WindowsComponent extends ComponentBase{
 	private int boundX;
 	private int boundY;
 	private int boundWidth;

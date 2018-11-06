@@ -12,7 +12,7 @@ import basic.event.KeyBoardEvent;
 import basic.event.RemoveBulletEvent;
 import basic.world.World;
 
-public class PlayinglayerSystem implements System, KeyBoardEvent, RemoveBulletEvent{
+public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBulletEvent{
 
 	private World world;
 	private EntityHandle player;

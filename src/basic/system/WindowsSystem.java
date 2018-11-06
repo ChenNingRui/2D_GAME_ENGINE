@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import basic.component.*;
 
-public class WindowsSystem implements System{
+public class WindowsSystem implements SystemBase{
 	
 	private WindowsComponent component;
 	private GraphicsContext graphics;

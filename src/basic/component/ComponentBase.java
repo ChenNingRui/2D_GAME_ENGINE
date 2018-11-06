@@ -1,6 +1,6 @@
 package basic.component;
 
-public class Component {
+public abstract class ComponentBase {
 	private int ID;
 	protected int type;
 

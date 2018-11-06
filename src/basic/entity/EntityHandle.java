@@ -1,6 +1,6 @@
 package basic.entity;
 
-import basic.component.Component;
+import basic.component.ComponentBase;
 import basic.world.World;
 
 public class EntityHandle {
@@ -20,11 +20,11 @@ public class EntityHandle {
 		world.destroyEntity(entity);
 	}
 	
-	public void removeComponent(Component component) {
+	public void removeComponent(ComponentBase component) {
 		world.removeComponent(entity, component);
 	}
 	
-	public void addComponent(Component component) {
+	public void addComponent(ComponentBase component) {
 		world.addComponent(entity ,component);
 	}
 

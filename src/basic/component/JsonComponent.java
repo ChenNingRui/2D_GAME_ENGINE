@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 
 import basic.component.manager.ComponentType;
 
-public class JsonComponent extends Component {
+public class JsonComponent extends ComponentBase {
 	private String path;
 	private JSONObject jsonObj;
 	private JSONArray jsonArr;

@@ -8,7 +8,7 @@ import org.json.simple.parser.JSONParser;
 
 import basic.component.JsonComponent;
 
-public class JsonSystem implements System {
+public class JsonSystem implements SystemBase {
 
 	private JsonComponent component;
 	

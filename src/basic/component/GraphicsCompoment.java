@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import basic.component.manager.ComponentType;
 
-public class GraphicsCompoment extends Component {
+public class GraphicsCompoment extends ComponentBase {
 	private String path;
 	private BufferedImage image;
 	

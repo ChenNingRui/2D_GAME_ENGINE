@@ -1,13 +1,13 @@
 package basic.component.manager;
 
-import basic.component.Component;
+import basic.component.ComponentBase;
 import basic.entity.Entity;
 
 public class ECSObject {
 	private Entity entity;
-	private Component component;
+	private ComponentBase component;
 	
-	public ECSObject(Entity e, Component c) {
+	public ECSObject(Entity e, ComponentBase c) {
 		this.entity = e;
 		this.component = c;
 	}
@@ -18,10 +18,10 @@ public class ECSObject {
 	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
-	public Component getComponent() {
+	public ComponentBase getComponent() {
 		return component;
 	}
-	public void setComponent(Component component) {
+	public void setComponent(ComponentBase component) {
 		this.component = component;
 	}
 

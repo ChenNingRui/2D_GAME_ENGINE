@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class GraphicsLoadSystem implements System{
+public class GraphicsLoadSystem implements SystemBase{
 	private GraphicsCompoment compoment;
 	
 	public GraphicsLoadSystem() {

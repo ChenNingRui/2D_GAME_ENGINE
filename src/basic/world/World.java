@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class World{
 	
-	private HashMap<Integer, ComponentManager> managerMap;
+	private HashMap<Integer, ComponentManagerBase> managerMap;
 	
 	private WindowsSystem windows;
 	private JsonSystem json;
@@ -58,7 +58,7 @@ public class World{
 	
 	///------------------------- Component -------------------------///
 	public void initComponentMnager() {
-		managerMap = new HashMap<Integer, ComponentManager>();
+		managerMap = new HashMap<Integer, ComponentManagerBase>();
 		managerMap.put(ComponentType.input, new InputComponentManager());
 		managerMap.put(ComponentType.move, new MoveComponentManager());
 		managerMap.put(ComponentType.texture, new TextureComponentManager());
@@ -69,24 +69,24 @@ public class World{
 	}
 	
 	// Add a component to an entity
-	public void addComponent(Entity entity, Component component) {
+	public void addComponent(Entity entity, ComponentBase component) {
 		managerMap.get(component.getType()).addComponent(entity, component);
 	}
 	
-	public void removeComponent(Entity entity, Component component) {
+	public void removeComponent(Entity entity, ComponentBase component) {
 		managerMap.get(component.getType()).removeComponentByEntity(entity);
 	}
 
-	public ComponentManager getComponentManagerByType(int type) {
+	public ComponentManagerBase getComponentManagerByType(int type) {
 		return managerMap.get(type);
 	}
 	
     
-    public Entity getEntityByComponent(Component component) {
+    public Entity getEntityByComponent(ComponentBase component) {
     	return managerMap.get(component.getType()).getEntityByComponent(component);
     }
     
-    public Component getComponentByEntity(int ComponentType, Entity entity) {
+    public ComponentBase getComponentByEntity(int ComponentType, Entity entity) {
     	return managerMap.get(ComponentType).getComponentByEntity(entity);
     }
     

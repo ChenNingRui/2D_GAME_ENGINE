@@ -1,10 +1,10 @@
 package basic.component;
 
-import basic.component.Component;
+import basic.component.ComponentBase;
 import basic.component.manager.ComponentType;
 import javafx.scene.image.Image;
 
-public class TextureComponent extends Component {
+public class TextureComponent extends ComponentBase {
 	private String textureName;
 	private Image image;
 	private double locationX;

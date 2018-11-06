@@ -111,12 +111,17 @@ public class World{
     	return entity;
     }
 	///------------------------- render -------------------------///
-    public void AddToStage(TextureComponent textureComponent) {
-    	windows.addToStage(textureComponent);
+    public void AddToStage(TextureComponent component) {
+    	windows.addToStage(component);
     }
     
-    public void removeFromStage(TextureComponent textureComponent) {
-    	windows.removeFromStage(textureComponent);
+    public void removeFromStage(TextureComponent component) {
+    	windows.removeFromStage(component);
+    	//return textureComponent;
+    }
+    
+    public int existInStage(TextureComponent component) {
+    	return windows.existInStage(component);
     }
     
 	public Image getImageByTextureComponent(TextureComponent textureComponent) {

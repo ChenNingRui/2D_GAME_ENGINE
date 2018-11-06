@@ -39,7 +39,9 @@ public class TextureSystem implements System, CreateBulletEventListener{
 			Entity bullet = bulletList.get(i);
 			TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
 			MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, bullet);
-			bulletTexture.setLocationY(bulletTexture.getLocationY() - bulletMove.getVelocity());
+			if(bulletTexture != null) {
+				bulletTexture.setLocationY(bulletTexture.getLocationY() - bulletMove.getVelocity());
+			}
 		}
 	}
 	

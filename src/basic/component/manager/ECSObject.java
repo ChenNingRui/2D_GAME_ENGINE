@@ -3,11 +3,11 @@ package basic.component.manager;
 import basic.component.Component;
 import basic.entity.Entity;
 
-public class ECObject {
+public class ECSObject {
 	private Entity entity;
 	private Component component;
 	
-	public ECObject(Entity e, Component c) {
+	public ECSObject(Entity e, Component c) {
 		this.entity = e;
 		this.component = c;
 	}

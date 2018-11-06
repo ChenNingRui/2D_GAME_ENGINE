@@ -111,7 +111,6 @@ public class MoveSystem implements System, CreateBulletEventListener {
 	@Override
 	public void onCreateBulletEvent(ArrayList<Entity> bulletList) {
 		// TODO Auto-generated method stub
-		//java.lang.System.out.println("ok");
 		this.bulletList = bulletList;
 	}
 

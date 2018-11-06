@@ -7,31 +7,30 @@ import java.util.ArrayList;
 import basic.component.Component;
 
 public class ComponentManager {
-	private ArrayList<ECObject> objList;
+	private ArrayList<ECSObject> objList;
 	protected int type;
 	
 	public ComponentManager() {
-		objList = new ArrayList<ECObject>();
+		objList = new ArrayList<ECSObject>();
 	}
 	
-	public ArrayList<ECObject> getComponentList() {
+	public ArrayList<ECSObject> getComponentList() {
 		return objList;
 	}
 	
 	public void addComponent(Entity entity, Component component) {
-		ECObject obj = new ECObject(entity, component);
+		ECSObject obj = new ECSObject(entity, component);
 		objList.add(obj);
 	}
 	
 	public void removeComponentByEntity(Entity entity) {
 		for(int i = 0; i < objList.size(); i++) {
-			ECObject obj = objList.get(i);
+			ECSObject obj = objList.get(i);
 			if(obj.getEntity() == entity) {
 				objList.remove(i);
 				obj = null;
 			}
 		}
-		java.lang.System.out.println("objList: " + objList.size());
 	}
 	
 	public void clearAll() {
@@ -40,7 +39,7 @@ public class ComponentManager {
 	
 	public Entity getEntityByComponent(Component component) {
 		for(int i = 0; i < objList.size(); i++) {
-			ECObject obj = objList.get(i);
+			ECSObject obj = objList.get(i);
 			if(obj.getComponent() == component) {
 				return obj.getEntity();
 			}
@@ -50,7 +49,7 @@ public class ComponentManager {
 	
 	public Component getComponentByEntity(Entity entity) {
 		for(int i = 0; i < objList.size(); i++) {
-			ECObject obj = objList.get(i);
+			ECSObject obj = objList.get(i);
 			if(obj.getEntity() == entity) {
 				return obj.getComponent();
 			}

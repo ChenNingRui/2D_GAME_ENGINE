@@ -64,7 +64,7 @@ public class WindowsSystem implements System{
 		graphics.clearRect(0, 0, component.getBoundWidth(), component.getBoundHeight());
 		
 		for(int i = 0; i < renderList.size(); i++) {
-			TextureComponent texture = renderList.get(i);
+			TextureComponent texture = (TextureComponent) renderList.get(i);
 			if(texture.isRotate()) {
 				texture.setRotate(false);
 				texture.setImage(imageRotation(texture.getImage(), texture.getAngle()));
@@ -79,15 +79,16 @@ public class WindowsSystem implements System{
 		// TODO Auto-generated method stub
 	}
 	
-	public void addToStage(TextureComponent textureComponent) {
-		renderList.add(textureComponent);
+	public void addToStage(TextureComponent component) {
+		renderList.add(component);
 	}
 	
-	public void removeFromStage(TextureComponent textureComponent) {
-		renderList.remove(textureComponent);
-		//java.lang.System.out.println("size: " + renderList.size());
-		//java.lang.System.out.println("ok " + is);
-		
+	public void removeFromStage(TextureComponent component) {
+		renderList.remove(component);
+	}
+	
+	public int existInStage(TextureComponent component) {
+		return renderList.indexOf(component);
 	}
 	
 	public void showWindow(Stage primaryStage) throws Exception {

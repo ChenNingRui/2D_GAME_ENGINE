@@ -17,7 +17,7 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener, Remove
 	private World world;
 	private EntityHandle player;
 	private ArrayList<Entity> bulletList;
-	
+	private ArrayList<Entity> enemyList;
 	private ArrayList<CreateBulletEventListener> createBulletlistenerList = new ArrayList<CreateBulletEventListener>();
 	
 	public PlayinglayerSystem(World world) {
@@ -27,23 +27,58 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener, Remove
 	@Override
 	public void instantiation() {
 		// TODO Auto-generated method stub
+
+		createPlayer();
+		bulletList = new ArrayList<Entity>();
+		enemyList = new ArrayList<Entity>();
+	}
+	
+	private void createPlayer() {
 		player = world.createEntity("player");
 		player.addComponent(new InputComponent());
 		player.addComponent(new MoveComponent(0, 20, ORIENTATION.SOUTH));
-		player.addComponent(new TextureComponent("enemyRed5.png", 180, 200, 200, 1, 1));
-		
-		bulletList = new ArrayList<Entity>();
+		player.addComponent(new TextureComponent("playerShip1_blue.png", 0, 200, 200, 1, 1));
 	}
 	
-	public Entity createBullet() {
+	private Entity createBullet() {
 		TextureComponent playTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player.getEntity());
 		EntityHandle bullet = world.createEntity("bullet" + bulletList.size());
 		bullet.addComponent(new MoveComponent(0, 10, ORIENTATION.SOUTH));
-		bullet.addComponent(new TextureComponent("fire03.png", 180, (playTexture.getLocationX() + 40), playTexture.getLocationY() + 10, 1, 1));
-		
+		bullet.addComponent(new TextureComponent("laserBlue16.png", 0, playTexture.getLocationX() + 40, playTexture.getLocationY() + 10, 1, 1));
 		bulletList.add(bullet.getEntity());
 		
 		return bullet.getEntity();
+	}
+	
+	private void removeBullet(Entity bullet) {
+		TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
+		world.removeFromStage(bulletTexture);
+		if(world.existInStage(bulletTexture) == -1) {
+			MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, bullet);
+			world.removeComponent(bullet, bulletMove);
+			world.removeComponent(bullet, bulletTexture);
+			bulletList.remove(bullet);
+			world.destroyEntity(bullet);
+		}
+	}
+	
+	private void createEnemy() {
+		EntityHandle enemy = world.createEntity("enemy" + enemyList.size());
+		enemy.addComponent(new MoveComponent(0, 10, ORIENTATION.SOUTH));
+		enemy.addComponent(new TextureComponent("enemyBlack5.png", 0, 0, 0, 1, 1));
+		bulletList.add(enemy.getEntity());
+	}
+	
+	private void removeEnemy(Entity enemy) {
+		TextureComponent enemyTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, enemy);
+		world.removeFromStage(enemyTexture);
+		if(world.existInStage(enemyTexture) == -1) {
+			MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, enemy);
+			world.removeComponent(enemy, bulletMove);
+			world.removeComponent(enemy, enemyTexture);
+			enemyList.remove(enemy);
+			world.destroyEntity(enemy);
+		}
 	}
 	
 	public void addCreateBulletListener(CreateBulletEventListener listener) {
@@ -73,13 +108,6 @@ public class PlayinglayerSystem implements System, KeyBoardEventListener, Remove
 	@Override
 	public void onRemoveBulletEvent(Entity bullet) {
 		// TODO Auto-generated method stub
-		java.lang.System.out.println("remove");
-		MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, bullet);
-		TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
-		world.removeFromStage(bulletTexture);
-		world.removeComponent(bullet, bulletMove);
-		world.removeComponent(bullet, bulletTexture);
-		bulletList.remove(bullet);
-		world.destroyEntity(bullet);
+		removeBullet(bullet);
 	}
 }

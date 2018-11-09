@@ -9,30 +9,42 @@ import basic.component.TextureComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.event.CreateBulletEvent;
+import basic.event.CreateEnemyEvent;
 import basic.event.RemoveBulletEvent;
+import basic.event.RemoveEnemyEvent;
 import basic.world.World;
 
-public class MoveSystem implements SystemBase, CreateBulletEvent {
+public class MoveSystem implements SystemBase, CreateBulletEvent, CreateEnemyEvent{
 	private World world;
+	
 	private Entity player;
 	private InputComponent playerInput;
 	private MoveComponent playerMove;
 	private TextureComponent playerTexture;
+	
 	private ArrayList<Entity> bulletList;
-	private ArrayList<RemoveBulletEvent> removeBulletlistenerList = new ArrayList<RemoveBulletEvent>();
+	private ArrayList<RemoveBulletEvent> removeBulletEventList;
+	
+	private ArrayList<Entity> enemyList;
+	private ArrayList<RemoveEnemyEvent> removeEnemyEventList;
 	
 	public MoveSystem(World world) {
 		this.world = world;
+		removeBulletEventList = new ArrayList<RemoveBulletEvent>();
+		removeEnemyEventList = new ArrayList<RemoveEnemyEvent>();
 		player = world.getEntityByName("player");
 		playerInput = (InputComponent) world.getComponentByEntity(ComponentType.input, player);
 		playerMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, player);
 		playerTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player);
 	}
 	
-	public void addRemoveBulletListener(RemoveBulletEvent listener) {
-		removeBulletlistenerList.add(listener);
+	public void removeBulletEvent(RemoveBulletEvent event) {
+		removeBulletEventList.add(event);
 	}
 	
+	public void removeEnemyEvent(RemoveEnemyEvent event){
+		this.removeEnemyEventList.add(event);
+	}	
 
 	@Override
 	public void instantiation() {
@@ -99,8 +111,21 @@ public class MoveSystem implements SystemBase, CreateBulletEvent {
 				Entity bullet = bulletList.get(i);
 				TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
 				if(bulletTexture.getLocationY() <= 100) {
-					for(RemoveBulletEvent listener : removeBulletlistenerList) {
+					for(RemoveBulletEvent listener : removeBulletEventList) {
 						listener.onRemoveBulletEvent(bullet);
+					}
+					//java.lang.System.out.println("no " + bulletList.size());
+				}
+			}
+		}
+		
+		if(enemyList != null && enemyList.size() != 0) {
+			for(int i = 0; i < enemyList.size(); i++) {
+				Entity enemy = enemyList.get(i);
+				TextureComponent enemyTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, enemy);
+				if(enemyTexture.getLocationY() >= 500) {
+					for(RemoveEnemyEvent listener : removeEnemyEventList) {
+						listener.onRemoveEnemyEvent(enemy);
 					}
 					//java.lang.System.out.println("no " + bulletList.size());
 				}
@@ -112,6 +137,12 @@ public class MoveSystem implements SystemBase, CreateBulletEvent {
 	public void onCreateBulletEvent(ArrayList<Entity> bulletList) {
 		// TODO Auto-generated method stub
 		this.bulletList = bulletList;
+	}
+
+	@Override
+	public void onCreateEnemyEvent(ArrayList<Entity> enemyList) {
+		// TODO Auto-generated method stub
+		this.enemyList = enemyList;
 	}
 
 }

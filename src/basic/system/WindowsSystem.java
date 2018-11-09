@@ -99,11 +99,6 @@ public class WindowsSystem implements SystemBase{
         primaryStage.setScene(new Scene(root));
 	}
 	
-	public Canvas getCanvas()
-	{
-		return canvas;
-	}	
-	
 	public WindowsComponent getWindowsComponent() {
 		return component;
 	}

@@ -8,17 +8,23 @@ import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.entity.EntityHandle;
 import basic.event.CreateBulletEvent;
+import basic.event.CreateEnemyEvent;
 import basic.event.KeyBoardEvent;
 import basic.event.RemoveBulletEvent;
+import basic.event.RemoveEnemyEvent;
 import basic.world.World;
 
-public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBulletEvent{
+public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBulletEvent, RemoveEnemyEvent{
 
 	private World world;
 	private EntityHandle player;
 	private ArrayList<Entity> bulletList;
 	private ArrayList<Entity> enemyList;
-	private ArrayList<CreateBulletEvent> createBulletlistenerList = new ArrayList<CreateBulletEvent>();
+	private ArrayList<CreateBulletEvent> createBulletEventList = new ArrayList<CreateBulletEvent>();
+	private ArrayList<CreateEnemyEvent> createEnemyEventList = new ArrayList<CreateEnemyEvent>();
+	private int[] randomNumberList;
+	private WindowsComponent windowComponent;
+	private long lastUpdate;
 	
 	public PlayinglayerSystem(World world) {
 		this.world = world;
@@ -26,8 +32,9 @@ public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBull
 	
 	@Override
 	public void instantiation() {
-		// TODO Auto-generated method stub
-
+		lastUpdate = 0;
+		randomNumberList = new int[3];
+		windowComponent = world.getWindowsComponent();
 		createPlayer();
 		bulletList = new ArrayList<Entity>();
 		enemyList = new ArrayList<Entity>();
@@ -59,55 +66,81 @@ public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBull
 			world.removeComponent(bullet, bulletTexture);
 			bulletList.remove(bullet);
 			world.destroyEntity(bullet);
+			
+			//java.lang.System.out.println(bulletList.size());
 		}
 	}
 	
-	private void createEnemy() {
+	private void createEnemy(int x) {
 		EntityHandle enemy = world.createEntity("enemy" + enemyList.size());
-		enemy.addComponent(new MoveComponent(0, 10, ORIENTATION.SOUTH));
-		enemy.addComponent(new TextureComponent("enemyBlack5.png", 0, 0, 0, 1, 1));
-		bulletList.add(enemy.getEntity());
+		enemy.addComponent(new MoveComponent(0, 3, ORIENTATION.NORTH));
+		enemy.addComponent(new TextureComponent("enemyBlack5.png", 0, x, -30, 1, 1));
+		enemyList.add(enemy.getEntity());
 	}
 	
 	private void removeEnemy(Entity enemy) {
 		TextureComponent enemyTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, enemy);
 		world.removeFromStage(enemyTexture);
 		if(world.existInStage(enemyTexture) == -1) {
-			MoveComponent bulletMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, enemy);
-			world.removeComponent(enemy, bulletMove);
+			MoveComponent enemyMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, enemy);
+			world.removeComponent(enemy, enemyMove);
 			world.removeComponent(enemy, enemyTexture);
 			enemyList.remove(enemy);
 			world.destroyEntity(enemy);
 		}
 	}
 	
-	public void addCreateBulletListener(CreateBulletEvent listener) {
-		createBulletlistenerList.add(listener);
+	private void randomNumberList() {
+		for(int i = 0, length = randomNumberList.length; i < length; i++) {
+			int position = (int)(Math.random() * windowComponent.getBoundWidth() - 100) + 50;
+			randomNumberList[i] = position;
+		}
+	}
+	
+	public void addCreateBulletEvent(CreateBulletEvent event) {
+		createBulletEventList.add(event);
+	}
+	
+	public void addCreateEnemyEvent(CreateEnemyEvent event) {
+		createEnemyEventList.add(event);
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto -generated method stub
+		long currentTime = java.lang.System.currentTimeMillis();
+        	 if (currentTime - lastUpdate >= 3000) {
+ 				randomNumberList();
+ 				for(int i = 0, length = randomNumberList.length; i < length; i ++) {
+ 					createEnemy(randomNumberList[i]);
+ 				}
+ 				
+ 				for(CreateEnemyEvent listener : createEnemyEventList) {
+ 					listener.onCreateEnemyEvent(enemyList);
+ 				}
+        		lastUpdate = currentTime ;
+             }
 	}
 
 	@Override
 	public void onPressTheKey() {
-		// TODO Auto-generated method stub
-		//java.lang.System.out.print("fight");
 		createBullet();
-		for(CreateBulletEvent listener : createBulletlistenerList) {
+		for(CreateBulletEvent listener : createBulletEventList) {
 			listener.onCreateBulletEvent(bulletList);
 		}
 	}
 
 	@Override
 	public void onRemoveBulletEvent(Entity bullet) {
-		// TODO Auto-generated method stub
 		removeBullet(bullet);
+	}
+
+	@Override
+	public void onRemoveEnemyEvent(Entity enemy) {
+		// TODO Auto-generated method stub
+		removeEnemy(enemy);
 	}
 }

@@ -8,6 +8,7 @@ import basic.entity.Entity;
 import basic.event.KeyBoardEvent;
 import basic.world.World;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -38,7 +39,7 @@ public class InputSystem implements SystemBase{
 		@Override
 		public void handle(KeyEvent event) {
 			// TODO Auto-generated method stub
-			if(event.getEventType() == KeyEvent.KEY_PRESSED) {
+			if(event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.SPACE) {
 				inputcomponent.setCurKeyCode(event.getCode());
 				inputcomponent.setKeyPress(true);
 				onPressKeyEvent();

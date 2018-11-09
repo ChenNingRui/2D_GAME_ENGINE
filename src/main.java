@@ -30,10 +30,15 @@ public class Main extends Application{
 		//final long startNanoTime = System.nanoTime();
 		new AnimationTimer()
 	    {
-	        public void handle(long currentNanoTime)
+			long lastUpdate = 0;
+	        public void handle(long currentTime)
 	        {
+	        	 if (currentTime - lastUpdate >= 3800000) {
+	        		 world.render();
+	        		 lastUpdate = currentTime ;
+                 }
 	            //double t = (currentNanoTime - startNanoTime) / 1000000000.0; 
-	        	world.run();
+	        	world.update();;
 	        }
 	    }.start();
 	    

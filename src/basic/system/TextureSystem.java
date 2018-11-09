@@ -7,14 +7,16 @@ import basic.component.TextureComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
 import basic.event.CreateBulletEvent;
+import basic.event.CreateEnemyEvent;
 import basic.world.World;
 
-public class TextureSystem implements SystemBase, CreateBulletEvent{
+public class TextureSystem implements SystemBase, CreateBulletEvent, CreateEnemyEvent{
 	private World world;
 	private Entity player;
 	private TextureComponent playerTexture;
 	
 	private ArrayList<Entity> bulletList;
+	private ArrayList<Entity> enemyList;
 	
 	public TextureSystem(World world) {
 		this.world = world;
@@ -28,6 +30,12 @@ public class TextureSystem implements SystemBase, CreateBulletEvent{
 		TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
 		world.getImageByTextureComponent(bulletTexture);
 		world.AddToStage(bulletTexture);
+	}
+	
+	private void addEnemyToStage(Entity enemy) {
+		TextureComponent enemyTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, enemy);
+		world.getImageByTextureComponent(enemyTexture);
+		world.AddToStage(enemyTexture);
 	}
 	
 	private void renderBullet() {
@@ -45,6 +53,21 @@ public class TextureSystem implements SystemBase, CreateBulletEvent{
 		}
 	}
 	
+	private void renderEnemy() {
+		if(enemyList == null || enemyList.size() == 0) {
+			return;
+		}
+		
+		for(int i = 0; i < enemyList.size(); i++) {
+			Entity enemy = enemyList.get(i);
+			TextureComponent enemyTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, enemy);
+			MoveComponent enemyMove = (MoveComponent) world.getComponentByEntity(ComponentType.move, enemy);
+			if(enemyTexture != null) {
+				enemyTexture.setLocationY(enemyTexture.getLocationY() + enemyMove.getVelocity());
+			}
+		}
+	}
+	
 	@Override
 	public void instantiation() {
 		// TODO Auto-generated method stub
@@ -54,9 +77,8 @@ public class TextureSystem implements SystemBase, CreateBulletEvent{
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
-		
-		//mouse control
 		renderBullet();
+		renderEnemy();
 	}
 
 	@Override
@@ -73,6 +95,17 @@ public class TextureSystem implements SystemBase, CreateBulletEvent{
 		}
 		
 		this.bulletList = bulletList;
+	}
+
+	@Override
+	public void onCreateEnemyEvent(ArrayList<Entity> enemyList) {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < enemyList.size(); i++) {
+			Entity enemy = enemyList.get(i);
+			addEnemyToStage(enemy);
+		}
+		
+		this.enemyList = enemyList;
 	}
 	
 	

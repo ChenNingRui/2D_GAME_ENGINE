@@ -48,9 +48,14 @@ public class World{
     	move = new MoveSystem(this);
     	
     	input.addKeyPressListener(playinglayer);
-    	playinglayer.addCreateBulletListener(texture);
-    	playinglayer.addCreateBulletListener(move);
-    	move.addRemoveBulletListener(playinglayer);
+    	
+    	playinglayer.addCreateBulletEvent(texture);
+    	playinglayer.addCreateBulletEvent(move);
+    	playinglayer.addCreateEnemyEvent(texture);
+    	playinglayer.addCreateEnemyEvent(move);
+    	
+    	move.removeBulletEvent(playinglayer);
+    	move.removeEnemyEvent(playinglayer);
 	}
 	
 	//destory this world
@@ -131,11 +136,15 @@ public class World{
 		
 		return image;
 	}
-    
-	public void run() {	
-//		double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+	
+	public void render() {
 		texture.render();
 		windows.render();
+	}
+    
+	public void update() {	
+//		double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 		move.update();
+		playinglayer.update();
 	}
 }

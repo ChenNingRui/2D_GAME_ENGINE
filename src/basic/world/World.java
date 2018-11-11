@@ -21,6 +21,7 @@ public class World{
 	private MoveSystem move;
 	private PlayinglayerSystem playinglayer;
 	private TextureSystem texture;
+	private CollisionSystem collision;
 	
 	private EntityManager entityManager;
 	
@@ -46,13 +47,21 @@ public class World{
     	windows.showWindow(primaryStage);
     	input = new InputSystem(this, primaryStage);
     	move = new MoveSystem(this);
+    	collision = new CollisionSystem(this);
+    	collision.instantiation();
     	
     	input.addKeyPressListener(playinglayer);
     	
     	playinglayer.addCreateBulletEvent(texture);
     	playinglayer.addCreateBulletEvent(move);
+    	playinglayer.addCreateBulletEvent(collision);
     	playinglayer.addCreateEnemyEvent(texture);
     	playinglayer.addCreateEnemyEvent(move);
+    	playinglayer.addCreateEnemyEvent(collision);
+    	
+    	
+    	collision.removeBulletEvent(playinglayer);
+    	collision.removeEnemyEvent(playinglayer);
     	
     	move.removeBulletEvent(playinglayer);
     	move.removeEnemyEvent(playinglayer);
@@ -146,5 +155,6 @@ public class World{
 //		double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 		move.update();
 		playinglayer.update();
+		collision.update();
 	}
 }

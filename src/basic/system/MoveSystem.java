@@ -110,7 +110,7 @@ public class MoveSystem implements SystemBase, CreateBulletEvent, CreateEnemyEve
 			for(int i = 0; i < bulletList.size(); i++) {
 				Entity bullet = bulletList.get(i);
 				TextureComponent bulletTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, bullet);
-				if(bulletTexture.getLocationY() <= 100) {
+				if(bulletTexture.getLocationY() <= -50) {
 					for(RemoveBulletEvent listener : removeBulletEventList) {
 						listener.onRemoveBulletEvent(bullet);
 					}
@@ -127,7 +127,6 @@ public class MoveSystem implements SystemBase, CreateBulletEvent, CreateEnemyEve
 					for(RemoveEnemyEvent listener : removeEnemyEventList) {
 						listener.onRemoveEnemyEvent(enemy);
 					}
-					//java.lang.System.out.println("no " + bulletList.size());
 				}
 			}
 		}

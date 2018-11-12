@@ -43,9 +43,14 @@ public class CollisionSystem implements SystemBase, CreateBulletEvent, CreateEne
 				for(int j = 0; j < enemyList.size(); j++) {
 					//java.lang.System.out.println(enemyList.get(j));
 					//java.lang.System.out.println(bulletList.get(i));
-					if(bulletList != null && bulletList.size() != 0 && enemyList != null && enemyList.size() != 0) {
-						checkcollision(enemyList.get(j), bulletList.get(i));
-					}
+					
+					Entity enemy = enemyList.get(j);
+					
+					if(bulletList.size() == 0)
+						continue;
+					
+					Entity bullet = (bulletList.size() == 0) ? null : bulletList.get(i);
+					checkcollision(enemy, bullet);
 				}
 			}
 		}
@@ -72,23 +77,22 @@ public class CollisionSystem implements SystemBase, CreateBulletEvent, CreateEne
 	}
 	
 	private void checkcollision(Entity obj1, Entity obj2) {
-		if(obj1 == null || obj2 == null)
-			return;
-		
-		TextureComponent obj1Texture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, obj1);
-		TextureComponent obj2Texture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, obj2);
+		if(obj1 != null || obj2 != null){
+			TextureComponent obj1Texture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, obj1);
+			TextureComponent obj2Texture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, obj2);
 
-		int x = (int) (obj1Texture.getLocationX() + obj1Texture.getWidth() / 2);
-		int y = (int) (obj1Texture.getLocationY() + obj1Texture.getHeight() / 2);
-		Point p1 = new Point(x, y);
-        if (getDistance(p1, obj2Texture.getLocationX(), obj2Texture.getLocationY()) < 80) {
-			for(RemoveEnemyEvent listener : removeEnemyEventList) {
-				listener.onRemoveEnemyEvent(obj1);
-			}
-			for(RemoveBulletEvent listener : removeBulletEventList) {
-				listener.onRemoveBulletEvent(obj2);
-			}
-        }
+			int x = (int) (obj1Texture.getLocationX() + obj1Texture.getWidth() / 2);
+			int y = (int) (obj1Texture.getLocationY() + obj1Texture.getHeight() / 2);
+			Point p1 = new Point(x, y);
+	        if (getDistance(p1, obj2Texture.getLocationX(), obj2Texture.getLocationY()) < 80) {
+				for(RemoveEnemyEvent listener : removeEnemyEventList) {
+					listener.onRemoveEnemyEvent(obj1);
+				}
+				for(RemoveBulletEvent listener : removeBulletEventList) {
+					listener.onRemoveBulletEvent(obj2);
+				}
+	        }
+		}
 	}
 	
     private double getDistance(Point p, double ox, double oy) {

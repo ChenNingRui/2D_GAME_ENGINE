@@ -153,8 +153,8 @@ public class World{
     
 	public void update() {	
 //		double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+		collision.update();
 		move.update();
 		playinglayer.update();
-		collision.update();
 	}
 }

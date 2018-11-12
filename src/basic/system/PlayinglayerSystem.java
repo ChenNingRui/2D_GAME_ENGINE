@@ -74,7 +74,7 @@ public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBull
 	private void createEnemy(int x) {
 		EntityHandle enemy = world.createEntity("enemy" + enemyList.size());
 		enemy.addComponent(new MoveComponent(0, 3, ORIENTATION.NORTH));
-		enemy.addComponent(new TextureComponent("enemyBlack5.png", 0, x, -30, 1, 1));
+		enemy.addComponent(new TextureComponent("enemyBlack5.png", 0, x, x * -1 , 1, 1));
 		enemyList.add(enemy.getEntity());
 	}
 	

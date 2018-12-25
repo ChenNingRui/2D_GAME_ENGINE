@@ -12,18 +12,24 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import basic.component.*;
+import basic.component.manager.ComponentType;
+import basic.entity.Entity;
+import basic.world.World;
 
 public class WindowsSystem implements SystemBase{
 	
 	private WindowsComponent component;
 	private GraphicsContext graphics;
 	private Group root;
+	private World world;
 	
 	private Canvas canvas;
 	
 	private ArrayList<TextureComponent> renderList;
 	
-	public WindowsSystem() {
+	public WindowsSystem(World world) {
+		this.world = world;
+		
 		instantiation();
 		init();
 	}
@@ -65,13 +71,16 @@ public class WindowsSystem implements SystemBase{
 		
 		for(int i = 0; i < renderList.size(); i++) {
 			TextureComponent texture = (TextureComponent) renderList.get(i);
-			if(texture.isRotate()) {
-				texture.setRotate(false);
-				texture.setImage(imageRotation(texture.getImage(), texture.getAngle()));
+			Entity entity = world.getEntityByComponent(texture);
+			PositionComponent position = (PositionComponent) world.getComponentByEntity(ComponentType.position, entity);
+			
+			if(position.isRotate()) {
+				position.setRotate(false);
+				texture.setImage(imageRotation(texture.getImage(), position.getAngle()));
 			}
 			
 			graphics.drawImage(texture.getImage(), 
-					texture.getLocationX(), texture.getLocationY());
+					position.getLocationX(), position.getLocationY());
 		}
 	}
 	

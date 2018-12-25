@@ -3,6 +3,7 @@ package basic.system;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import basic.component.PositionComponent;
 import basic.component.TextureComponent;
 import basic.component.manager.ComponentType;
 import basic.entity.Entity;
@@ -49,7 +50,7 @@ public class CollisionSystem implements SystemBase, CreateBulletEvent, CreateEne
 					if(bulletList.size() == 0)
 						continue;
 					
-					Entity bullet = (bulletList.size() == 0) ? null : bulletList.get(i);
+					Entity bullet = (bulletList.get(i) == null) ? null : bulletList.get(i);
 					checkcollision(enemy, bullet);
 				}
 			}
@@ -78,13 +79,15 @@ public class CollisionSystem implements SystemBase, CreateBulletEvent, CreateEne
 	
 	private void checkcollision(Entity obj1, Entity obj2) {
 		if(obj1 != null || obj2 != null){
+			PositionComponent obj1Position = (PositionComponent) world.getComponentByEntity(ComponentType.position, obj1);
+			PositionComponent obj2Position = (PositionComponent) world.getComponentByEntity(ComponentType.position, obj2);
+			
 			TextureComponent obj1Texture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, obj1);
-			TextureComponent obj2Texture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, obj2);
 
-			int x = (int) (obj1Texture.getLocationX() + obj1Texture.getWidth() / 2);
-			int y = (int) (obj1Texture.getLocationY() + obj1Texture.getHeight() / 2);
+			int x = (int) (obj1Position.getLocationX() + obj1Texture.getWidth() / 2);
+			int y = (int) (obj1Position.getLocationY() + obj1Texture.getHeight() / 2);
 			Point p1 = new Point(x, y);
-	        if (getDistance(p1, obj2Texture.getLocationX(), obj2Texture.getLocationY()) < 80) {
+	        if (getDistance(p1, obj2Position.getLocationX(), obj2Position.getLocationY()) < 80) {
 				for(RemoveEnemyEvent listener : removeEnemyEventList) {
 					listener.onRemoveEnemyEvent(obj1);
 				}

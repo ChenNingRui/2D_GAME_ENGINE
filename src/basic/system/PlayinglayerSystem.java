@@ -43,15 +43,17 @@ public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBull
 	private void createPlayer() {
 		player = world.createEntity("player");
 		player.addComponent(new InputComponent());
+		player.addComponent(new PositionComponent(200, 200, 0));
 		player.addComponent(new MoveComponent(0, 20, ORIENTATION.SOUTH));
-		player.addComponent(new TextureComponent("playerShip1_blue.png", 0, 200, 200, 1, 1));
+		player.addComponent(new TextureComponent("playerShip1_blue.png", 1, 1));
 	}
 	
 	private Entity createBullet() {
-		TextureComponent playTexture = (TextureComponent) world.getComponentByEntity(ComponentType.texture, player.getEntity());
+		PositionComponent playPosition = (PositionComponent) world.getComponentByEntity(ComponentType.position, player.getEntity());
 		EntityHandle bullet = world.createEntity("bullet" + bulletList.size());
 		bullet.addComponent(new MoveComponent(0, 10, ORIENTATION.SOUTH));
-		bullet.addComponent(new TextureComponent("laserBlue16.png", 0, playTexture.getLocationX() + 40, playTexture.getLocationY() + 10, 1, 1));
+		bullet.addComponent(new PositionComponent(playPosition.getLocationX() + 40, playPosition.getLocationY() + 10, 0));
+		bullet.addComponent(new TextureComponent("laserBlue16.png",1, 1));
 		bulletList.add(bullet.getEntity());
 		
 		return bullet.getEntity();
@@ -74,7 +76,8 @@ public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBull
 	private void createEnemy(int x) {
 		EntityHandle enemy = world.createEntity("enemy" + enemyList.size());
 		enemy.addComponent(new MoveComponent(0, 3, ORIENTATION.NORTH));
-		enemy.addComponent(new TextureComponent("enemyBlack5.png", 0, x, x * -1 , 1, 1));
+		enemy.addComponent(new PositionComponent(x, x * -1, 0));
+		enemy.addComponent(new TextureComponent("enemyBlack5.png", 1, 1));
 		enemyList.add(enemy.getEntity());
 	}
 	
@@ -121,15 +124,16 @@ public class PlayinglayerSystem implements SystemBase, KeyBoardEvent, RemoveBull
  				for(CreateEnemyEvent listener : createEnemyEventList) {
  					listener.onCreateEnemyEvent(enemyList);
  				}
-        		lastUpdate = currentTime ;
+
+ 				lastUpdate = currentTime ;
              }
 	}
 
 	@Override
 	public void onPressTheKey() {
 		createBullet();
-		for(CreateBulletEvent listener : createBulletEventList) {
-			listener.onCreateBulletEvent(bulletList);
+		for(CreateBulletEvent event : createBulletEventList) {
+			event.onCreateBulletEvent(bulletList);
 		}
 	}
 

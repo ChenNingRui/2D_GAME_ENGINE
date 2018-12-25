@@ -27,7 +27,7 @@ public class World{
 	
 	 // Add a new system (should happen before init)
     public void addSystem() {
-    	windows = new WindowsSystem();
+    	windows = new WindowsSystem(this);
     	json = new JsonSystem();
     	GraphicsLoad = new GraphicsLoadSystem();
     }
@@ -76,6 +76,7 @@ public class World{
 		managerMap.put(ComponentType.input, new InputComponentManager());
 		managerMap.put(ComponentType.move, new MoveComponentManager());
 		managerMap.put(ComponentType.texture, new TextureComponentManager());
+		managerMap.put(ComponentType.position, new PositionComponentManager());
 	}
 	
 	public void destoryComponentManager() {
@@ -147,7 +148,7 @@ public class World{
 	}
 	
 	public void render() {
-		texture.render();
+		move.render();
 		windows.render();
 	}
     
